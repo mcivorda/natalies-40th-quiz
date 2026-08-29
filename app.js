@@ -313,7 +313,7 @@ function showDifficultyChoice(){
 
 function pointsFor(q){
   if (!q) return 0;
-  return q.points || 50;
+  return q.points || (q.difficulty === "hard" ? 75 : 50);
 }
 
 const HINT_COST = 20;
