@@ -313,8 +313,10 @@ function showDifficultyChoice(){
 
 function pointsFor(q){
   if (!q) return 0;
-  return q.points || (q.difficulty === "hard" ? 250 : 100);
+  return q.points || 50;
 }
+
+const HINT_COST = 20;
 
 /* ---------------------------- question engine ---------------------------- */
 function renderQuestion(difficulty){
@@ -337,6 +339,27 @@ function renderQuestion(difficulty){
     `TOPIC ${state.currentIndex + 1} / ${state.currentQueue.length}`;
   document.getElementById("q-feedback").textContent = "";
   document.getElementById("q-feedback").className = "feedback";
+
+  const hintBtn = document.getElementById("btn-hint");
+  const hintText = document.getElementById("hint-text");
+  hintText.style.display = "none";
+  hintText.textContent = "";
+  if (q.hint){
+    hintBtn.style.display = "inline-block";
+    hintBtn.disabled = false;
+    hintBtn.textContent = `💡 HINT (-${HINT_COST} PTS)`;
+    hintBtn.onclick = () => {
+      hintText.textContent = q.hint;
+      hintText.style.display = "block";
+      hintBtn.disabled = true;
+      hintBtn.textContent = `💡 HINT USED (-${HINT_COST})`;
+      state.score = Math.max(0, state.score - HINT_COST);
+      state.tapeScore = Math.max(0, state.tapeScore - HINT_COST);
+      updateScoreboard();
+    };
+  } else {
+    hintBtn.style.display = "none";
+  }
 
   destroyMaskedYouTube();
   const media = document.getElementById("q-media");
