@@ -39,6 +39,10 @@
     <div class="tiles" id="tiles"></div>
 
     <div class="scoreboard" id="scoreboard"></div>
+
+    <div class="finish-quiz-row">
+      <button type="button" class="btn yellow" id="btn-finish-quiz" style="display:none;" onclick="showFinalScore()">&#127937; FINISH QUIZ</button>
+    </div>
   </section>
 
   <!-- ============= MOVIES SHELF ============= -->
@@ -121,6 +125,21 @@
         <button class="btn" onclick="rewatchShelf()">PLAY ANOTHER TAPE</button>
         <button class="btn pink" onclick="playAnother()">BACK TO MENU</button>
       </div>
+    </div>
+  </section>
+
+  <!-- ============= FINAL SCORE ============= -->
+  <section id="screen-final" class="screen">
+    <div class="results-card final-card">
+      <div class="results-player" id="final-player"></div>
+      <h2 class="neon-pink">QUIZ COMPLETE!</h2>
+      <div class="results-score" id="final-score">0</div>
+      <p id="final-summary"></p>
+      <div class="final-breakdown" id="final-breakdown"></div>
+      <div class="player-controls">
+        <button class="btn pink" onclick="playAnother()">BACK TO MENU</button>
+      </div>
+      <p class="final-privacy-note">Shown on this screen only — nothing here is saved or sent anywhere.</p>
     </div>
   </section>
 

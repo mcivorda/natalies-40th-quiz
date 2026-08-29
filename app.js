@@ -10,10 +10,12 @@ const state = {
   correct: 0,
   tapeAnswered: 0,
   tapeCorrect: 0,
+  tapeScore: 0,
   currentCategory: null,
   currentQueue: [],   // array of {topic, sourceLabel}
   currentIndex: 0,
-  currentTapeTitle: null
+  currentTapeTitle: null,
+  roundHistory: []    // [{ label, correct, answered, score }] -- one entry per completed tape, this session only
 };
 
 const SPINE_COLORS = ["#ff2e9a", "#00fff2", "#faff00", "#7c4dff", "#38ff8a", "#ff7a3d"];
@@ -75,6 +77,9 @@ function updateScoreboard(){
   const mini = document.getElementById("scoreboard-mini");
   if (main) main.innerHTML = html;
   if (mini) mini.innerHTML = html;
+
+  const finishBtn = document.getElementById("btn-finish-quiz");
+  if (finishBtn) finishBtn.style.display = state.roundHistory.length > 0 ? "inline-block" : "none";
 }
 
 /* ---------------------------- category routing ---------------------------- */
@@ -98,6 +103,7 @@ function enterCategory(id){
     state.currentTapeTitle = labelFor(id);
     state.tapeAnswered = 0;
     state.tapeCorrect = 0;
+    state.tapeScore = 0;
     if (state.currentQueue.length === 0){
       alert("No questions loaded for this category yet \u2014 add some in data.js!");
       showScreen("welcome");
@@ -142,6 +148,7 @@ function selectMovie(movie, spineEl){
   state.currentTapeTitle = movie.title;
   state.tapeAnswered = 0;
   state.tapeCorrect = 0;
+  state.tapeScore = 0;
 
   const flipFrom = spineEl ? {
     rect: spineEl.getBoundingClientRect(),
@@ -657,6 +664,7 @@ function registerAnswer(isCorrect, points){
     state.correct++;
     state.tapeCorrect++;
     state.score += (points || 100);
+    state.tapeScore += (points || 100);
     flashFeedback(true);
   } else {
     flashFeedback(false);
@@ -682,6 +690,12 @@ function nextQuestion(){
 
 function finishTape(){
   destroyMaskedYouTube();
+  state.roundHistory.push({
+    label: state.currentTapeTitle || "",
+    correct: state.tapeCorrect,
+    answered: state.tapeAnswered,
+    score: state.tapeScore
+  });
   document.getElementById("results-player").textContent =
     "PLAYER: " + (state.playerName ? state.playerName.toUpperCase() : "GUEST");
   document.getElementById("results-score").textContent = state.score;
@@ -690,6 +704,33 @@ function finishTape(){
     `${escapeHtml(state.currentTapeTitle || "")} finished \u2014 ${state.tapeCorrect}/${state.tapeAnswered} correct on this tape.<br>` +
     `Running total: ${state.correct}/${state.answered} correct (${pct}%).`;
   showScreen("results");
+}
+
+/* "FINISH QUIZ" -- a one-screen combined summary of every round played this
+   session, entirely client-side: nothing here is ever sent or saved
+   anywhere, it's just read from in-memory state and disappears on reload. */
+function showFinalScore(){
+  destroyMaskedYouTube();
+  document.getElementById("final-player").textContent =
+    "PLAYER: " + (state.playerName ? state.playerName.toUpperCase() : "GUEST");
+  document.getElementById("final-score").textContent = state.score;
+  const pct = state.answered ? Math.round((state.correct / state.answered) * 100) : 0;
+  document.getElementById("final-summary").textContent =
+    `${state.correct}/${state.answered} correct overall (${pct}%).`;
+
+  const breakdown = document.getElementById("final-breakdown");
+  breakdown.innerHTML = "";
+  state.roundHistory.forEach(round => {
+    const row = document.createElement("div");
+    row.className = "final-round-row";
+    row.innerHTML = `
+      <span class="final-round-label">${escapeHtml(round.label)}</span>
+      <span class="final-round-score">${round.correct}/${round.answered} \u2014 ${round.score} pts</span>
+    `;
+    breakdown.appendChild(row);
+  });
+
+  showScreen("final");
 }
 
 function playAnother(){

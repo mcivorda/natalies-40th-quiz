@@ -173,6 +173,8 @@ button{ font-family:inherit; }
 }
 .scoreboard b{ color:var(--yellow); }
 
+.finish-quiz-row{ margin-top:22px; display:flex; justify-content:center; }
+
 /* ---------- movies: shelf of spines ---------- */
 #screen-movies{ align-items:stretch; }
 .shelf-header{ text-align:center; margin-bottom:10px; }
@@ -435,6 +437,24 @@ button{ font-family:inherit; }
 .results-card h2{ font-size:1.3rem; color:var(--yellow); }
 .results-score{ font-family:'Monoton'; font-size:3rem; color:var(--chrome); margin:18px 0; text-shadow:0 0 20px var(--magenta);}
 .results-card p{ font-family:'VT323'; font-size:1.3rem; color:#c9caf0; }
+
+/* ---------- final score (combined across every round played) ---------- */
+#screen-final{ justify-content:center; align-items:center; text-align:center; }
+.final-card{ border-color:var(--magenta); box-shadow:0 0 40px rgba(255,46,154,.3); max-width:560px; }
+.final-breakdown{
+  margin:18px 0 6px; display:flex; flex-direction:column; gap:8px;
+  text-align:left;
+}
+.final-round-row{
+  display:flex; justify-content:space-between; gap:14px;
+  background:var(--ink2); border:1px solid var(--line); border-radius:6px;
+  padding:8px 14px; font-family:'VT323'; font-size:1.15rem;
+}
+.final-round-label{ color:var(--chrome); }
+.final-round-score{ color:var(--yellow); white-space:nowrap; }
+.final-privacy-note{
+  margin-top:18px; font-family:'VT323'; font-size:1rem; color:#7a7ba0;
+}
 
 /* ---------- back / nav ---------- */
 .topbar{
