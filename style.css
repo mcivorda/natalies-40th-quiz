@@ -175,6 +175,21 @@ button{ font-family:inherit; }
 
 .finish-quiz-row{ margin-top:22px; display:flex; justify-content:center; }
 
+.share-qr{
+  margin-top:36px; display:flex; flex-direction:column; align-items:center; gap:10px;
+}
+.share-qr-label{
+  font-family:'Press Start 2P'; font-size:.7rem; color:var(--cyan);
+  text-shadow:0 0 8px var(--cyan); letter-spacing:1px; text-align:center;
+}
+.share-qr-img{
+  width:160px; height:160px; padding:10px; background:var(--chrome);
+  border:3px solid var(--cyan); border-radius:10px; box-shadow:0 0 20px rgba(0,255,242,.35);
+}
+.share-qr-url{
+  font-family:'VT323'; font-size:1.1rem; color:#9ea0c9; word-break:break-all; max-width:300px; text-align:center;
+}
+
 /* ---------- movies: shelf of spines ---------- */
 #screen-movies{ align-items:stretch; }
 .shelf-header{ text-align:center; margin-bottom:10px; }

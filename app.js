@@ -61,6 +61,19 @@ function buildWelcome(){
     wrap.appendChild(tile);
   });
   updateScoreboard();
+
+  // Only makes sense when this page is actually being served from a real
+  // URL (GitHub Pages etc.) -- hidden when opened as a local file, since
+  // there's nothing sensible to scan to in that case.
+  const shareQr = document.getElementById("share-qr");
+  if (shareQr){
+    if (location.protocol !== "file:"){
+      shareQr.style.display = "flex";
+      document.getElementById("share-qr-url").textContent = location.href;
+    } else {
+      shareQr.style.display = "none";
+    }
+  }
 }
 
 function categoryIcon(id){
