@@ -1,0 +1,451 @@
+/* ============================================================================
+   NATALIE'S 40th — RETRO VHS / SYNTHWAVE THEME
+   Palette:  ink #0d0221 / #1a0b2e   magenta #ff2e9a   cyan #00fff2
+             yellow #faff00          violet #7c4dff    chrome #cfd8ff
+============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Press+Start+2P&family=VT323&display=swap');
+
+:root{
+  --ink:#0d0221;
+  --ink2:#1a0b2e;
+  --magenta:#ff2e9a;
+  --cyan:#00fff2;
+  --yellow:#faff00;
+  --violet:#7c4dff;
+  --chrome:#e7e9ff;
+  --line:rgba(231,233,255,.14);
+}
+
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--chrome);
+  font-family:'VT323', monospace;
+  font-size:22px;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.arcade{
+  font-family:'Press Start 2P', monospace;
+  line-height:1.5;
+  letter-spacing:.5px;
+}
+button{ font-family:inherit; }
+
+/* ---------- background: scanlines + grid horizon (ambient, static) ---------- */
+.bg-scanlines{
+  position:fixed; inset:0; pointer-events:none; z-index:5;
+  background:repeating-linear-gradient(
+    to bottom, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px,
+    rgba(0,0,0,.18) 3px, rgba(0,0,0,0) 4px
+  );
+  mix-blend-mode:multiply;
+}
+.bg-vignette{
+  position:fixed; inset:0; pointer-events:none; z-index:4;
+  background:radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 40%, rgba(0,0,0,.65) 100%);
+}
+.bg-grid{
+  position:fixed; left:0; right:0; bottom:0; height:52vh; z-index:0;
+  background-image:
+    linear-gradient(var(--violet) 1px, transparent 1px),
+    linear-gradient(90deg, var(--violet) 1px, transparent 1px);
+  background-size:60px 60px;
+  transform:perspective(300px) rotateX(62deg);
+  transform-origin:bottom;
+  opacity:.35;
+  mask-image:linear-gradient(to top, black, transparent);
+}
+.bg-sun{
+  position:fixed; left:50%; top:8vh; width:340px; height:340px; z-index:0;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:linear-gradient(180deg, var(--yellow) 0%, var(--magenta) 55%, var(--violet) 100%);
+  box-shadow:0 0 120px rgba(255,46,154,.45);
+  opacity:.5;
+}
+.bg-sky{
+  position:fixed; inset:0; z-index:-1;
+  background:linear-gradient(180deg, #1a0b2e 0%, #240a3d 40%, #3a0e42 70%, #0d0221 100%);
+}
+
+.app{ position:relative; z-index:1; min-height:100%; }
+
+/* ---------- neon text ---------- */
+.neon-pink{ color:var(--magenta); text-shadow:0 0 6px var(--magenta), 0 0 18px var(--magenta), 0 0 40px rgba(255,46,154,.6);}
+.neon-cyan{ color:var(--cyan); text-shadow:0 0 6px var(--cyan), 0 0 18px var(--cyan), 0 0 40px rgba(0,255,242,.6);}
+.neon-yellow{ color:var(--yellow); text-shadow:0 0 6px var(--yellow), 0 0 18px var(--yellow), 0 0 40px rgba(250,255,0,.5);}
+.neon-violet{ color:var(--violet); text-shadow:0 0 6px var(--violet), 0 0 18px var(--violet), 0 0 40px rgba(124,77,255,.6);}
+
+/* ============================== SCREENS ============================== */
+.screen{
+  min-height:100vh; width:100%;
+  display:none;
+  flex-direction:column; align-items:center;
+  padding:40px 20px 80px;
+}
+.screen.active{ display:flex; }
+
+/* ---------- boot / power-on screen ---------- */
+#screen-boot{ justify-content:center; align-items:center; text-align:center; }
+.boot-logo{
+  font-family:'Monoton', cursive;
+  font-size:clamp(2.6rem, 8vw, 5.5rem);
+  color:var(--chrome);
+  text-shadow:0 0 10px var(--magenta), 0 0 30px var(--magenta), 0 0 70px var(--violet);
+  animation:flicker 3.2s infinite;
+  margin:0;
+}
+.boot-sub{ font-family:'VT323'; font-size:1.6rem; color:var(--cyan); margin-top:6px; letter-spacing:3px;}
+.boot-bar{
+  margin-top:46px; width:min(360px,80vw); height:18px;
+  border:2px solid var(--chrome); border-radius:2px; overflow:hidden;
+  box-shadow:0 0 12px rgba(231,233,255,.4);
+}
+.boot-bar-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--magenta),var(--cyan)); animation:loadbar 2.4s ease forwards;}
+.boot-hint{ margin-top:18px; font-family:'VT323'; color:#9ea0c9; font-size:1.1rem;}
+@keyframes loadbar{ to{ width:100%; } }
+@keyframes flicker{
+  0%,19%,21%,23%,80%,100%{ opacity:1; }
+  20%,22%,79%{ opacity:.72; }
+}
+
+/* ---------- welcome / category select ---------- */
+#screen-welcome{ padding-top:60px; }
+.marquee{ text-align:center; margin-bottom:8px; }
+.marquee h1{
+  font-family:'Monoton', cursive;
+  font-size:clamp(2rem, 7vw, 4.2rem);
+  color:var(--chrome);
+  text-shadow:0 0 8px var(--cyan), 0 0 24px var(--magenta), 0 0 60px var(--violet);
+  margin:0;
+}
+.marquee .tagline{
+  font-family:'Press Start 2P'; font-size:.65rem; color:var(--yellow);
+  margin-top:14px; letter-spacing:1px;
+}
+.player-name-row{
+  margin:26px 0 8px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;
+}
+.player-name-row label{ font-family:'VT323'; font-size:1.3rem; color:#9ea0c9; }
+.player-name-row input{
+  background:var(--ink2); border:2px solid var(--cyan); color:var(--chrome);
+  font-family:'VT323'; font-size:1.3rem; padding:6px 12px; border-radius:4px;
+  outline:none;
+}
+.player-name-row input:focus{ box-shadow:0 0 10px var(--cyan); }
+
+.tiles{
+  display:grid; grid-template-columns:repeat(2, minmax(220px,1fr));
+  gap:26px; max-width:760px; width:100%; margin-top:44px;
+}
+@media (max-width:600px){ .tiles{ grid-template-columns:1fr; } }
+
+.tile{
+  position:relative;
+  background:linear-gradient(160deg, rgba(26,11,46,.9), rgba(13,2,33,.95));
+  border:2px solid var(--tile-color, var(--magenta));
+  border-radius:10px;
+  padding:26px 18px;
+  cursor:pointer;
+  text-align:center;
+  transition:transform .18s ease, box-shadow .18s ease;
+  box-shadow:0 0 0 rgba(0,0,0,0);
+}
+.tile:hover, .tile:focus-visible{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 10px 30px rgba(0,0,0,.5), 0 0 26px var(--tile-color, var(--magenta));
+}
+.tile .tile-icon{ font-size:2.4rem; margin-bottom:10px; filter:drop-shadow(0 0 8px var(--tile-color));}
+.tile h2{ font-size:1rem; margin:6px 0; color:var(--tile-color); text-shadow:0 0 8px var(--tile-color); }
+.tile .tile-sub{ font-family:'VT323'; color:#9ea0c9; font-size:1.15rem; }
+.tile .tile-corner{
+  position:absolute; top:8px; right:10px; font-family:'VT323';
+  font-size:.85rem; color:var(--tile-color); opacity:.8;
+}
+
+.scoreboard{
+  margin-top:36px; font-family:'VT323'; font-size:1.3rem; color:var(--chrome);
+  display:flex; gap:22px; flex-wrap:wrap; justify-content:center;
+}
+.scoreboard b{ color:var(--yellow); }
+
+/* ---------- movies: shelf of spines ---------- */
+#screen-movies{ align-items:stretch; }
+.shelf-header{ text-align:center; margin-bottom:10px; }
+.shelf-header h2{ color:var(--magenta); font-size:1.1rem; }
+.shelf-header p{ font-family:'VT323'; color:#9ea0c9; font-size:1.2rem; margin-top:6px;}
+
+.shelf-wrap{
+  width:100%; max-width:1200px; margin:30px auto 0;
+  padding:0 14px 18px;
+}
+.shelf{
+  display:flex; align-items:flex-end; gap:2px;
+  padding:0 0 22px;
+  border-bottom:10px solid #3a2b1a;
+  box-shadow:0 8px 16px rgba(0,0,0,.5);
+  width:100%;
+}
+.spine{
+  --spine-glow:#ff2e9a;
+  position:relative;
+  flex:1 1 0; min-width:0;
+  height:min(52vh, 320px);
+  border:none;
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .16s ease, box-shadow .16s ease, filter .16s ease;
+  background:none;
+  padding:0;
+}
+.spine img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  filter:saturate(1.05);
+}
+.spine:hover, .spine:focus-visible{
+  transform:translateY(-16px);
+  box-shadow:0 0 18px var(--spine-glow), 0 12px 20px rgba(0,0,0,.6);
+  z-index:2;
+  filter:brightness(1.12);
+}
+
+
+/* ---------- tape player: cover reveal + question ---------- */
+#screen-player{ justify-content:flex-start; }
+.stage-row{ width:100%; display:flex; flex-direction:column; align-items:center; }
+.player-stage{
+  width:100%; max-width:520px; margin:10px auto 0;
+}
+
+/* Movies: once playing, show the VHS cover and the question side by side
+   (landscape) instead of stacked -- the cover stays part of the trivia. */
+@media (min-width:860px){
+  .stage-row.stage-row--split{
+    flex-direction:row; align-items:flex-start; justify-content:center;
+    gap:32px; max-width:1200px; margin:10px auto 0;
+  }
+  .stage-row--split .player-stage{
+    flex:0 0 380px; max-width:380px; margin:0;
+  }
+  .stage-row--split .qpanel{
+    flex:1 1 0; min-width:0; margin:0;
+  }
+}
+.tape-cover{
+  position:relative; width:100%; aspect-ratio:600/420;
+  border-radius:8px; overflow:hidden;
+  border:3px solid var(--chrome);
+  box-shadow:0 0 30px rgba(0,0,0,.6), 0 0 30px var(--magenta);
+  display:flex; align-items:center; justify-content:center;
+  background:#000;
+}
+.tape-cover.pop-in{ animation:tape-in .55s cubic-bezier(.2,.8,.3,1.2); }
+@keyframes tape-in{
+  0%{ transform:scale(.82) translateY(26px); opacity:0; }
+  100%{ transform:scale(1) translateY(0); opacity:1; }
+}
+.tape-cover img{ width:100%; height:100%; object-fit:cover; display:block; }
+.tape-cover img.cover-img, .tape-cover img.spine-img{
+  position:absolute; inset:0; width:100%; height:100%;
+}
+.tape-cover img.spine-img{ z-index:2; }
+.tape-cover img.cover-img{ z-index:1; opacity:0; }
+.tape-cover.tape-blank{
+  background:linear-gradient(160deg, var(--ink2), #05030a);
+  flex-direction:column; gap:14px;
+}
+.tape-blank .arcade{ color:var(--cyan); font-size:.75rem; text-shadow:0 0 10px var(--cyan);}
+.tape-blank .reels{ display:flex; gap:60px; }
+.reel{
+  width:60px; height:60px; border-radius:50%;
+  border:6px solid var(--chrome); position:relative;
+  animation:spin 2.4s linear infinite;
+}
+.reel::after{
+  content:""; position:absolute; inset:20px; border-radius:50%; background:var(--chrome);
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+.player-controls{ display:flex; justify-content:center; gap:16px; margin-top:22px; flex-wrap:wrap;}
+.btn{
+  font-family:'Press Start 2P'; font-size:.7rem; padding:14px 20px;
+  background:transparent; border:2px solid var(--cyan); color:var(--cyan);
+  border-radius:6px; cursor:pointer; letter-spacing:1px;
+  transition:all .15s ease;
+  text-shadow:0 0 6px var(--cyan);
+}
+.btn:hover{ background:var(--cyan); color:var(--ink); box-shadow:0 0 20px var(--cyan); }
+.btn.pink{ border-color:var(--magenta); color:var(--magenta); text-shadow:0 0 6px var(--magenta); }
+.btn.pink:hover{ background:var(--magenta); color:var(--ink); box-shadow:0 0 20px var(--magenta); }
+.btn.yellow{ border-color:var(--yellow); color:var(--yellow); text-shadow:0 0 6px var(--yellow); }
+.btn.yellow:hover{ background:var(--yellow); color:var(--ink); box-shadow:0 0 20px var(--yellow); }
+.btn:disabled{ opacity:.35; cursor:not-allowed; }
+.btn:disabled:hover{ background:transparent; color:inherit; box-shadow:none; }
+
+/* ---------- question panel ---------- */
+.qpanel{
+  width:100%; max-width:640px; margin:26px auto 0;
+  background:rgba(26,11,46,.75);
+  border:2px solid var(--violet);
+  border-radius:10px; padding:26px;
+  box-shadow:0 0 26px rgba(124,77,255,.25);
+}
+.qpanel .qtag{ font-family:'Press Start 2P'; font-size:.6rem; color:var(--yellow); }
+.qpanel .qprompt{
+  font-family:'VT323'; font-size:clamp(1.9rem, 2.8vw, 2.5rem); margin:10px 0 22px; line-height:1.3;
+  color:var(--cyan); text-shadow:0 0 8px var(--cyan), 0 0 24px rgba(0,255,242,.45);
+  letter-spacing:.3px;
+}
+.qbody{ display:flex; flex-direction:column; margin-top:14px; }
+.qmedia{ width:100%; border-radius:8px; overflow:hidden; margin-bottom:18px; border:2px solid var(--cyan); }
+.qmedia img, .qmedia video{ width:100%; display:block; }
+.qmedia audio{ width:100%; display:block; }
+.yt-embed{ position:relative; width:100%; padding-top:56.25%; height:0; background:#000; }
+.yt-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+/* ---------- masked YouTube "mystery track" player ---------- */
+/* The real YouTube player is rendered fully invisible (opacity:0) so its
+   audio still plays but nothing YouTube-branded is ever on screen -- our
+   own cover with its own PLAY button sits on top instead. */
+.yt-player-target{
+  position:absolute; inset:0; width:100%; height:100%; border:0;
+  opacity:0; pointer-events:none;
+}
+.yt-mystery-cover{
+  position:absolute; inset:0; z-index:2;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+  background:linear-gradient(160deg, var(--ink2), #05030a);
+}
+.yt-mystery-reels{ display:flex; gap:36px; }
+.yt-mystery-reels .reel{
+  width:44px; height:44px; border-radius:50%;
+  border:5px solid var(--chrome); position:relative;
+  animation:none;
+}
+.yt-mystery-reels.spinning .reel{ animation:spin 2.4s linear infinite; }
+.yt-mystery-reels .reel::after{
+  content:""; position:absolute; inset:13px; border-radius:50%; background:var(--chrome);
+}
+.yt-mystery-label{
+  font-family:'Press Start 2P'; font-size:.75rem; color:var(--cyan);
+  text-shadow:0 0 10px var(--cyan); letter-spacing:1px;
+}
+.qright{ display:flex; flex-direction:column; min-width:0; }
+
+/* Landscape / TV presentation: media on the left, question+answers on the
+   right, side by side instead of stacked. Falls back to the stacked layout
+   above on narrower screens. */
+@media (min-width:860px){
+  .qpanel{ max-width:1140px; }
+  .qbody{ flex-direction:row; align-items:flex-start; gap:32px; }
+  .qmedia{ flex:1 1 50%; max-width:50%; margin-bottom:0; align-self:flex-start; }
+  .qright{ flex:1 1 50%; }
+}
+
+/* ---------- mask duration on "how long" reveal clips ---------- */
+/* Hides just the elapsed/total time readout (Chrome/Edge/Safari) so the
+   native video controls can't give away a timed answer before it's
+   revealed. Play/pause, seek bar, volume and fullscreen stay untouched.
+   Firefox doesn't expose these parts for styling, so duration still shows
+   there -- Chrome/Edge is the safe bet for the TV on the day. */
+.mask-duration::-webkit-media-controls-current-time-display,
+.mask-duration::-webkit-media-controls-time-remaining-display{
+  display:none !important;
+}
+
+.options{ display:flex; flex-direction:column; gap:12px; }
+#btn-check-multi{ margin-top:14px; align-self:flex-start; font-size:.7rem; }
+
+.diff-chooser{ display:flex; gap:14px; margin-bottom:6px; flex-wrap:wrap; }
+.diff-chooser .diff-btn{
+  flex:1 1 140px; padding:20px 14px; font-size:.8rem;
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+}
+.diff-chooser .diff-btn span{
+  font-family:'VT323'; font-size:1.1rem; opacity:.85; letter-spacing:1px;
+}
+.option{
+  text-align:left; font-family:'VT323'; font-size:1.3rem;
+  background:var(--ink2); border:2px solid var(--line); color:var(--chrome);
+  padding:12px 16px; border-radius:6px; cursor:pointer; transition:all .12s ease;
+}
+.option:hover{ border-color:var(--cyan); box-shadow:0 0 10px rgba(0,255,242,.3); }
+.option.selected{ border-color:var(--yellow); box-shadow:0 0 10px rgba(250,255,0,.4); }
+.option.correct{ border-color:#38ff8a; background:rgba(56,255,138,.12); box-shadow:0 0 14px rgba(56,255,138,.5); }
+.option.wrong{ border-color:#ff3b5c; background:rgba(255,59,92,.12); box-shadow:0 0 14px rgba(255,59,92,.5); }
+.option:disabled{ cursor:default; }
+
+/* ---------- home movies: reveal-style video answers ---------- */
+#btn-show-answer{ margin-bottom:18px; }
+.qanswer-media{ flex-direction:column; gap:16px; margin-bottom:18px; }
+.answer-text-line{
+  font-family:'VT323'; font-size:1.4rem; color:var(--yellow);
+  text-shadow:0 0 8px rgba(250,255,0,.4);
+}
+.answer-clip{
+  border:2px solid var(--cyan); border-radius:8px; overflow:hidden;
+  background:rgba(0,0,0,.3);
+}
+.answer-clip video{ width:100%; display:block; }
+.answer-clip-label{
+  font-family:'Press Start 2P'; font-size:.6rem; color:var(--cyan);
+  padding:10px 12px 0;
+}
+.answer-clip-caption{
+  font-family:'VT323'; font-size:1.15rem; color:#9ea0c9;
+  padding:2px 12px 12px;
+}
+.answer-clip .attempt-reveal-btn{ margin:12px; font-size:.65rem; }
+.answer-clip .attempt-answer-text{ padding:0 12px 14px; }
+
+.text-answer-row{ display:flex; gap:10px; flex-wrap:wrap; }
+.text-answer-row input{
+  flex:1; min-width:180px;
+  background:var(--ink2); border:2px solid var(--cyan); color:var(--chrome);
+  font-family:'VT323'; font-size:1.3rem; padding:10px 14px; border-radius:6px; outline:none;
+}
+
+.feedback{ margin-top:16px; font-family:'Press Start 2P'; font-size:.75rem; min-height:1.2em; }
+.feedback.good{ color:#38ff8a; text-shadow:0 0 8px #38ff8a; }
+.feedback.bad{ color:#ff3b5c; text-shadow:0 0 8px #ff3b5c; }
+
+.qfooter{ display:flex; justify-content:space-between; align-items:center; margin-top:22px; flex-wrap:wrap; gap:10px;}
+.qcount{ font-family:'VT323'; color:#9ea0c9; font-size:1.1rem; }
+
+/* ---------- generic "coming soon-ish" round intro for non-movie categories ---------- */
+.round-title{ text-align:center; margin:20px 0 6px; }
+.round-title h2{ font-size:1.2rem; }
+.round-title p{ font-family:'VT323'; color:#9ea0c9; font-size:1.2rem; }
+
+/* ---------- results ---------- */
+#screen-results{ justify-content:center; align-items:center; text-align:center; }
+.results-card{
+  background:rgba(26,11,46,.85); border:2px solid var(--yellow);
+  border-radius:12px; padding:40px 30px; max-width:520px; width:100%;
+  box-shadow:0 0 40px rgba(250,255,0,.25);
+}
+.results-player{
+  font-family:'Press Start 2P'; font-size:.85rem; color:var(--cyan);
+  text-shadow:0 0 8px var(--cyan); margin-bottom:16px; letter-spacing:1px;
+}
+.results-card h2{ font-size:1.3rem; color:var(--yellow); }
+.results-score{ font-family:'Monoton'; font-size:3rem; color:var(--chrome); margin:18px 0; text-shadow:0 0 20px var(--magenta);}
+.results-card p{ font-family:'VT323'; font-size:1.3rem; color:#c9caf0; }
+
+/* ---------- back / nav ---------- */
+.topbar{
+  width:100%; max-width:1000px; display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:6px;
+}
+.topbar .btn{ font-size:.6rem; padding:10px 14px; }
+
+.footer-credit{
+  position:relative; z-index:1; text-align:center; color:#5c5d84; font-family:'VT323';
+  font-size:1rem; padding:30px 0 10px;
+}
+
+::selection{ background:var(--magenta); color:#0d0221; }

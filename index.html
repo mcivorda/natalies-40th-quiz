@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Natalie's 40th — Be Kind, Rewind Quiz</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-sky"></div>
+<div class="bg-sun"></div>
+<div class="bg-grid"></div>
+<div class="bg-vignette"></div>
+<div class="bg-scanlines"></div>
+
+<div class="app">
+
+  <!-- ============= BOOT SCREEN ============= -->
+  <section id="screen-boot" class="screen active">
+    <h1 class="boot-logo">REWIND</h1>
+    <div class="boot-sub">BE KIND &middot; 40 YEARS &middot; PRESS START</div>
+    <div class="boot-bar"><div class="boot-bar-fill"></div></div>
+    <div class="boot-hint">loading tape&hellip;</div>
+  </section>
+
+  <!-- ============= WELCOME / CATEGORY SELECT ============= -->
+  <section id="screen-welcome" class="screen">
+    <div class="marquee">
+      <h1 class="neon-pink">NATALIE'S 40th</h1>
+      <div class="tagline neon-cyan">BE KIND, REWIND &nbsp;&bull;&nbsp; INSERT BRAIN, PRESS PLAY</div>
+    </div>
+
+    <div class="player-name-row">
+      <label for="player-name">PLAYER NAME:</label>
+      <input id="player-name" type="text" placeholder="Natalie" maxlength="24">
+    </div>
+
+    <div class="tiles" id="tiles"></div>
+
+    <div class="scoreboard" id="scoreboard"></div>
+  </section>
+
+  <!-- ============= MOVIES SHELF ============= -->
+  <section id="screen-movies" class="screen">
+    <div class="topbar">
+      <button class="btn pink" onclick="backToWelcome()">&larr; MENU</button>
+      <div></div>
+    </div>
+    <div class="shelf-header">
+      <h2 class="neon-pink">THE VIDEO SHELF</h2>
+      <p>Pick a tape off the shelf to play its question.</p>
+    </div>
+    <div class="shelf-wrap">
+      <div class="shelf" id="shelf"></div>
+    </div>
+  </section>
+
+  <!-- ============= TAPE PLAYER + QUESTION ============= -->
+  <section id="screen-player" class="screen">
+    <div class="topbar">
+      <button class="btn pink" onclick="rewatchShelf()">&larr; BACK</button>
+      <div class="scoreboard" id="scoreboard-mini"></div>
+    </div>
+
+    <div class="round-title">
+      <h2 class="neon-cyan" id="player-title">&nbsp;</h2>
+    </div>
+
+    <div class="stage-row" id="stage-row">
+      <div class="player-stage" id="player-stage">
+        <div class="tape-cover" id="player-stage-inner"></div>
+      </div>
+
+      <div class="qpanel" id="qpanel" style="display:none;">
+        <div class="qtag" id="q-tag"></div>
+
+        <div class="qbody">
+          <div class="qmedia" id="q-media"></div>
+
+          <div class="qright" id="qright">
+            <div class="qprompt" id="q-prompt"></div>
+
+            <div class="diff-chooser" id="diff-chooser" style="display:none;"></div>
+
+            <button type="button" class="btn yellow" id="btn-show-answer" style="display:none;">SHOW ANSWER</button>
+            <div class="qanswer-media" id="q-answer-media" style="display:none;"></div>
+
+            <div class="options" id="q-options"></div>
+            <button type="button" class="btn" id="btn-check-multi" style="display:none;" disabled>CHECK ANSWER</button>
+
+            <div class="text-answer-row" id="q-text-answer" style="display:none;">
+              <input type="text" id="text-answer-input" placeholder="Type your answer&hellip;" autocomplete="off">
+              <button class="btn" id="btn-submit-text">SUBMIT</button>
+            </div>
+
+            <div class="feedback" id="q-feedback"></div>
+          </div>
+        </div>
+
+        <div class="qfooter">
+          <span class="qcount" id="q-count"></span>
+          <button class="btn pink" id="btn-next-q" onclick="nextQuestion()" disabled>NEXT &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="player-controls" id="player-controls">
+      <button class="btn yellow" id="btn-play-tape">&#9654; PRESS PLAY</button>
+    </div>
+  </section>
+
+  <!-- ============= RESULTS ============= -->
+  <section id="screen-results" class="screen">
+    <div class="results-card">
+      <div class="results-player" id="results-player"></div>
+      <h2 class="neon-yellow">TAPE COMPLETE</h2>
+      <div class="results-score" id="results-score">0</div>
+      <p id="results-detail"></p>
+      <div class="player-controls">
+        <button class="btn" onclick="rewatchShelf()">PLAY ANOTHER TAPE</button>
+        <button class="btn pink" onclick="playAnother()">BACK TO MENU</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="footer-credit">made with love (and a lot of VHS static) for Natalie's 40th</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
