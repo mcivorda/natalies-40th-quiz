@@ -58,8 +58,8 @@
                                  tune"-style reveal. Find a video's ID in its
                                  URL: youtube.com/watch?v=THIS_PART
 
-   Every question also accepts an optional "points" (defaults: easy 100,
-   hard 250, if you don't set one).
+   Every question also accepts an optional "points" (defaults: easy 50,
+   hard 75, if you don't set one).
 
    Every question also accepts an optional "hint" (a short string). If set,
    a HINT button appears under the prompt -- clicking it reveals that text,
@@ -100,7 +100,7 @@ const QUIZ_DATA = {
     {
       id: "10things", title: "10 Things I Hate About You", file: "images/10-things-i-hate-about-you-62824l.jpg", spine: "images/spine_10things.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "\u201810 Things I Hate About You\u2019 is a teen retelling of which Shakespeare play?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "‘10 Things I Hate About You’ is a teen retelling of which Shakespeare play?",
           hint: "The play is about taming a stubborn, sharp-tongued woman.",
           options: ["Romeo and Juliet", "The Taming of the Shrew", "Much Ado About Nothing", "Twelfth Night"], answerIndex: 1 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the fictional Seattle high school the film is set at?",
@@ -111,7 +111,7 @@ const QUIZ_DATA = {
     {
       id: "littleprincess", title: "A Little Princess", file: "images/A_Little_Princess_-_All.jpg", spine: "images/spine_littleprincess.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "\u2018A Little Princess\u2019 is based on a novel by which author?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "‘A Little Princess’ is based on a novel by which author?",
           hint: "She also wrote The Secret Garden.",
           options: ["Frances Hodgson Burnett", "Roald Dahl", "L.M. Montgomery", "E. Nesbit"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "In the 1995 film, what does Sara's father leave New York to go and do?",
@@ -122,40 +122,40 @@ const QUIZ_DATA = {
     {
       id: "aladdin", title: "Aladdin", file: "images/aladdin-4746l.jpg", spine: "images/spine_aladdin.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "Who voiced the Genie in Disney's \u2018Aladdin\u2019 (1992)?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "Who voiced the Genie in Disney's ‘Aladdin’ (1992)?",
           hint: "Famous for largely improvising the role's rapid-fire jokes and impressions.",
           options: ["Eddie Murphy", "Dan Castellaneta", "Robin Williams", "John Goodman"], answerIndex: 2 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of Aladdin's pet monkey?",
-          hint: "A short, two-letter name.",
-          options: ["Rajah", "Iago", "Abu", "Zazu"], answerIndex: 2 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the palace guard captain who repeatedly tries to catch Aladdin?",
+          hint: "His name starts with 'Ra' — not the Egyptian sun god.",
+          options: ["Razoul", "Jafar", "Omar", "Farouk"], answerIndex: 0 }
       ]
     },
     {
       id: "anastasia", title: "Anastasia", file: "images/anastasia-32087l.jpg", spine: "images/spine_anastasia.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "\u2018Anastasia\u2019 (1997) is loosely inspired by the fall of which royal family?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "‘Anastasia’ (1997) is loosely inspired by the fall of which royal family?",
           hint: "The last imperial family to rule Russia.",
           options: ["The Habsburgs", "The Romanovs", "The Windsors", "The Bourbons"], answerIndex: 1 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the sorcerer villain who curses the Romanov family?",
-          hint: "Based on a real historical figure, a mystic advisor to the Russian court.",
-          options: ["Koschei", "Baba Yaga", "Rasputin", "Chernabog"], answerIndex: 2 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of Rasputin's bat sidekick?",
+          hint: "He gets his own spin-off short film, 'Bartok the Magnificent.'",
+          options: ["Bartok", "Pip", "Vladimir", "Dimitri"], answerIndex: 0 }
       ]
     },
     {
       id: "bridget", title: "Bridget Jones's Diary", file: "images/bridget-joness-diary-2391l.jpg", spine: "images/spine_bridget.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "Who plays the buttoned-up barrister Mark Darcy in \u2018Bridget Jones\u2019s Diary\u2019?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "Who plays the buttoned-up barrister Mark Darcy in ‘Bridget Jones's Diary’?",
           hint: "He played a very similarly-named Mr Darcy in a famous Austen adaptation too.",
           options: ["Hugh Grant", "Colin Firth", "Ralph Fiennes", "Rupert Everett"], answerIndex: 1 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of Bridget's caddish boss, played by Hugh Grant?",
-          hint: "His surname sounds like a kitchen utensil.",
-          options: ["Daniel Cleaver", "Jack Wickham", "Rupert Campbell-Black", "Simon Foster"], answerIndex: 0 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the publishing house Bridget works for before moving into TV journalism?",
+          hint: "It shares its name with a stately home from a classic Jane Austen novel.",
+          options: ["Pemberley Press", "Longbourn Books", "Rosings Publishing", "Netherfield House"], answerIndex: 0 }
       ]
     },
     {
       id: "bringiton", title: "Bring It On", file: "images/bring-it-on-17895l.jpg", spine: "images/spine_bringiton.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "What competitive activity is at the centre of \u2018Bring It On\u2019?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "What competitive activity is at the centre of ‘Bring It On’?",
           hint: "Pom-poms, pyramids, and a big national final.",
           options: ["Dance team", "Cheerleading", "Gymnastics", "Marching band"], answerIndex: 1 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of Kirsten Dunst's cheer-captain character?",
@@ -169,15 +169,15 @@ const QUIZ_DATA = {
         { difficulty: "easy", type: "multiple_choice", prompt: "What does Cinderella leave behind on the palace steps at midnight?",
           hint: "It's the one thing the spell doesn't turn back at the stroke of twelve.",
           options: ["Her shawl", "A glass slipper", "Her invitation", "A ring"], answerIndex: 1 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What are the names of Cinderella's two mouse friends?",
-          hint: "One's plump and food-obsessed, the other's the clever leader.",
-          options: ["Jaq and Gus", "Timothy and Bernard", "Chip and Dale", "Bianca and Percy"], answerIndex: 0 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of Cinderella's horse?",
+          hint: "A military-sounding rank.",
+          options: ["Major", "Captain", "Duke", "Colonel"], answerIndex: 0 }
       ]
     },
     {
       id: "coyoteugly", title: "Coyote Ugly", file: "images/coyote-ugly-all.jpg", spine: "images/spine_coyoteugly.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "In \u2018Coyote Ugly\u2019, Violet moves to which city chasing her songwriting dream?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "In ‘Coyote Ugly’, Violet moves to which city chasing her songwriting dream?",
           hint: "The city that never sleeps.",
           options: ["Nashville", "Los Angeles", "New York City", "Chicago"], answerIndex: 2 },
         { difficulty: "hard", type: "multiple_choice", prompt: "Who plays Lil, the tough-as-nails owner of the Coyote Ugly bar?",
@@ -188,34 +188,34 @@ const QUIZ_DATA = {
     {
       id: "dirtydancing", title: "Dirty Dancing", file: "images/dirty-dancing-all.jpg", spine: "images/spine_dirtydancing.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "What is the name of the holiday resort in \u2018Dirty Dancing\u2019?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "What is the name of the holiday resort in ‘Dirty Dancing’?",
           hint: "A Catskills-style summer resort, named after the family who runs it.",
           options: ["Kellerman's", "Grossinger's", "Camp Crystal", "The Pines"], answerIndex: 0 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What is the first name of Patrick Swayze's dance-instructor character, Mr Castle?",
-          hint: "Same first name as Patrick Swayze's character in Ghost.",
-          options: ["Johnny", "Robbie", "Neil", "Billy"], answerIndex: 0 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is Baby's real first name, revealed in the film's opening narration?",
+          hint: "It's also a country and a common English name.",
+          options: ["Frances", "Eleanor", "Patricia", "Margaret"], answerIndex: 0 }
       ]
     },
     {
       id: "hocuspocus", title: "Hocus Pocus", file: "images/hocus-pocus-32095l.jpg", spine: "images/spine_hocuspocus.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "The three witches in \u2018Hocus Pocus\u2019 are resurrected in which town?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "The three witches in ‘Hocus Pocus’ are resurrected in which town?",
           hint: "Famous for real 17th-century witch trials.",
           options: ["Sleepy Hollow", "Salem", "Amityville", "Innsmouth"], answerIndex: 1 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What are the first names of the three Sanderson sisters?",
-          hint: "One of them is famously boy-crazy and a bit ditzy.",
-          options: ["Winifred, Sarah and Mary", "Agnes, Edith and Rose", "Hilda, Zelda and Wanda", "Circe, Hecate and Freya"], answerIndex: 0 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the immortal black cat who guides the kids through the film?",
+          hint: "He was cursed 300 years earlier as a teenage boy.",
+          options: ["Thackery Binx", "Salem", "Jinx", "Familiar"], answerIndex: 0 }
       ]
     },
     {
       id: "guy10days", title: "How to Lose a Guy in 10 Days", file: "images/how-to-lose-a-guy-in-10-days-35677l.jpg", spine: "images/spine_guy10days.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "Kate Hudson's character writes a \u2018how-to\u2019 column for which magazine?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "Kate Hudson's character writes a ‘how-to’ column for which magazine?",
           hint: "The fictional \"Composure\" is a stand-in for a real, very famous women's magazine.",
           options: ["Composure", "Cosmopolitan", "Vogue", "Elle"], answerIndex: 0 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "Matthew McConaughey's character is trying to win an ad campaign for which product?",
-          hint: "A sparkly product, often given as a romantic gift.",
-          options: ["A diamond necklace", "A sports car", "A perfume line", "A wedding venue"], answerIndex: 0 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is the full name of Matthew McConaughey's advertising-executive character?",
+          hint: "Most people just remember his first name — 'Ben' something.",
+          options: ["Ben Barry", "Ben Foster", "Ben Anderson", "Ben Callahan"], answerIndex: 0 }
       ]
     },
     {
@@ -224,42 +224,42 @@ const QUIZ_DATA = {
         { difficulty: "easy", type: "multiple_choice", prompt: "What dish do Lady and Tramp famously share (and nearly kiss over)?",
           hint: "A classic candlelit Italian restaurant scene.",
           options: ["Pizza", "Spaghetti", "Meatballs alone", "Ice cream"], answerIndex: 1 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What dog breed is Lady?",
-          hint: "A breed known for its long, floppy ears.",
-          options: ["Beagle", "Cocker Spaniel", "Golden Retriever", "Dachshund"], answerIndex: 1 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the Scottish terrier who's friends with Lady?",
+          hint: "A one-syllable name, also slang for an athletic competitor.",
+          options: ["Jock", "Trusty", "Tramp", "Boris"], answerIndex: 0 }
       ]
     },
     {
       id: "moulinrouge", title: "Moulin Rouge!", file: "images/moulin-rouge-15498l.jpg", spine: "images/spine_moulinrouge.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "\u2018Moulin Rouge!\u2019 is set in the bohemian district of which city?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "‘Moulin Rouge!’ is set in the bohemian district of which city?",
           hint: "Home to the real Moulin Rouge cabaret, which the film is named after.",
           options: ["Vienna", "Paris", "Berlin", "Rome"], answerIndex: 1 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of Ewan McGregor's penniless-writer character?",
-          hint: "A common first name that's also a religious term.",
-          options: ["Christian", "Toulouse", "The Duke", "Satine"], answerIndex: 0 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the club's ringmaster/owner, played by Jim Broadbent?",
+          hint: "First name Harold.",
+          options: ["Harold Zidler", "Toulouse-Lautrec", "The Duke", "Chocolat"], answerIndex: 0 }
       ]
     },
     {
       id: "bestfriendswedding", title: "My Best Friend's Wedding", file: "images/my-best-friends-wedding-56595l.jpg", spine: "images/spine_bestfriendswedding.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "What is Julia Roberts' character's job in \u2018My Best Friend's Wedding\u2019?",
-          hint: "Her job involves eating out \u2014 professionally.",
+        { difficulty: "easy", type: "multiple_choice", prompt: "What is Julia Roberts' character's job in ‘My Best Friend's Wedding’?",
+          hint: "Her job involves eating out — professionally.",
           options: ["Wedding planner", "Restaurant critic", "Magazine editor", "Chef"], answerIndex: 1 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of Julia Roberts' character?",
-          hint: "Her surname is also a type of ceramic craft.",
-          options: ["Julianne Potter", "Kimberly Wallace", "Michelle Newman", "Jules Preston"], answerIndex: 0 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What song does Julianne sing badly, on purpose, at a karaoke-style restaurant to sabotage the wedding?",
+          hint: "A Dionne Warwick classic, title starts with 'I Say a Little...'",
+          options: ["I Say a Little Prayer", "Walk On By", "Respect", "I Will Survive"], answerIndex: 0 }
       ]
     },
     {
       id: "aristocats", title: "The Aristocats", file: "images/the-aristocats-all.jpg", spine: "images/spine_aristocats.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "What is the name of the elegant mother cat in \u2018The Aristocats\u2019?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "What is the name of the elegant mother cat in ‘The Aristocats’?",
           hint: "A title of nobility, fitting for such a refined cat.",
           options: ["Marie", "Duchess", "Minou", "Josephine"], answerIndex: 1 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the alley cat who helps Duchess and her kittens get home?",
-          hint: "A charming stray with a very Irish-sounding surname.",
-          options: ["Thomas O'Malley", "Scat Cat", "Lucifer", "Oliver"], answerIndex: 0 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What are the names of the two gossiping geese who help Duchess and the kittens get home?",
+          hint: "Auntie and niece — both names start with 'A'.",
+          options: ["Abigail and Amelia", "Bianca and Penny", "Flora and Fauna", "Prunella and Winifred"], answerIndex: 0 }
       ]
     },
     {
@@ -268,20 +268,20 @@ const QUIZ_DATA = {
         { difficulty: "easy", type: "multiple_choice", prompt: "What is the name of Ariel's crab friend and reluctant chaperone?",
           hint: "He sings \"Under the Sea\" with a Jamaican accent.",
           options: ["Flounder", "Sebastian", "Scuttle", "Louis"], answerIndex: 1 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the sea witch who steals Ariel's voice?",
-          hint: "Half-woman, half-octopus.",
-          options: ["Morgana", "Circe", "Ursula", "Vanessa"], answerIndex: 2 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What are the names of Ursula's two eel henchmen?",
+          hint: "One name evokes driftwood, the other a boat's exhaust.",
+          options: ["Flotsam and Jetsam", "Squirt and Nemo", "Bubbles and Fin", "Slick and Eely"], answerIndex: 0 }
       ]
     },
     {
       id: "rescuers", title: "The Rescuers", file: "images/the-rescuers-all.jpg", spine: "images/spine_rescuers.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "Bernard and Bianca work for which organisation in \u2018The Rescuers\u2019?",
-          hint: "It's like the United Nations \u2014 but for mice.",
+        { difficulty: "easy", type: "multiple_choice", prompt: "Bernard and Bianca work for which organisation in ‘The Rescuers’?",
+          hint: "It's like the United Nations — but for mice.",
           options: ["The Mouse Guard", "The Rescue Aid Society", "The Underground Railroad", "The Secret Six"], answerIndex: 1 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the kidnapped orphan girl Bernard and Bianca rescue?",
-          hint: "Also a small unit of currency.",
-          options: ["Penny", "Molly", "Anna", "Ellie"], answerIndex: 0 }
+        { difficulty: "hard", type: "multiple_choice", prompt: "What are the names of Madame Medusa's pet crocodiles?",
+          hint: "One's named after a Shakespearean assassin, the other a Roman emperor.",
+          options: ["Brutus and Nero", "Caesar and Cleo", "Jaws and Fang", "Snap and Crackle"], answerIndex: 0 }
       ]
     },
     {
@@ -302,6 +302,8 @@ const QUIZ_DATA = {
      own player, so this isn't a copy of anyone's audio, just a link-style
      embed like sharing a video). Swap youtubeId for any other official
      upload you prefer — the ID is the part after "watch?v=" in the URL.
+     Every video ID below was verified individually (title + embeddability
+     via YouTube's oEmbed API) before being added.
   ------------------------------------------------------------------------ */
   music: [
     {
@@ -310,8 +312,8 @@ const QUIZ_DATA = {
         { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
           media: { kind: "youtube", youtubeId: "djV11Xbc914", start: 0, end: 15 },
           hint: "Think 80s synth-pop, and a music video famous for its pencil-sketch animation.",
-          options: ["Take On Me \u2014 a-ha", "Wake Me Up Before You Go-Go \u2014 Wham!", "Girls Just Want to Have Fun \u2014 Cyndi Lauper", "Livin' on a Prayer \u2014 Bon Jovi"], answerIndex: 0 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "Same clip \u2014 what year was it originally released?",
+          options: ["Take On Me — a-ha", "Wake Me Up Before You Go-Go — Wham!", "Girls Just Want to Have Fun — Cyndi Lauper", "Livin' on a Prayer — Bon Jovi"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Same clip — what year was it originally released?",
           media: { kind: "youtube", youtubeId: "djV11Xbc914", start: 0, end: 15 },
           hint: "Same year the first Back to the Future film came out.",
           options: ["1983", "1985", "1987", "1989"], answerIndex: 1 }
@@ -320,9 +322,9 @@ const QUIZ_DATA = {
     {
       id: "iwillalwaysloveyou",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "Whitney Houston's version of \u2018I Will Always Love You\u2019 was written by which country legend?",
+        { difficulty: "easy", type: "multiple_choice", prompt: "Whitney Houston's version of ‘I Will Always Love You’ was written by which country legend?",
           media: { kind: "youtube", youtubeId: "T9Ybsvw_0p4", start: 0, end: 20 },
-          hint: "She's nearly as famous for her own hits as for writing this one \u2014 and she owns a Tennessee theme park.",
+          hint: "She's nearly as famous for her own hits as for writing this one — and she owns a Tennessee theme park.",
           options: ["Reba McEntire", "Dolly Parton", "Tammy Wynette", "Loretta Lynn"], answerIndex: 1 },
         { difficulty: "hard", type: "multiple_choice", prompt: "Whitney Houston's version topped the charts in 1992 as the lead single from which film's soundtrack?",
           media: { kind: "youtube", youtubeId: "T9Ybsvw_0p4", start: 0, end: 20 },
@@ -333,20 +335,111 @@ const QUIZ_DATA = {
     {
       id: "dontyouwantme",
       questions: [
-        { difficulty: "easy", type: "text", prompt: "Complete the lyric: \u2018Don't you want me, baby? Don't you want me...\u2019",
+        { difficulty: "easy", type: "text", prompt: "Complete the lyric: ‘Don't you want me, baby? Don't you want me...’",
           media: { kind: "youtube", youtubeId: "uPudE8nDog0", start: 0, end: 20 },
-          hint: "It's a short ad-lib \u2014 the same syllable, repeated three times.",
+          hint: "It's a short ad-lib — the same syllable, repeated three times.",
           answerText: "oh oh oh", accepted: ["oh oh oh oh", "oh, oh, oh"] },
-        { difficulty: "hard", type: "multiple_choice", prompt: "\u2018Don't You Want Me\u2019 was a 1981 UK Christmas #1 for which band?",
+        { difficulty: "hard", type: "multiple_choice", prompt: "‘Don't You Want Me’ was a 1981 UK Christmas #1 for which band?",
           media: { kind: "youtube", youtubeId: "uPudE8nDog0", start: 0, end: 20 },
           hint: "British synth-pop pioneers, named after a sci-fi organisation.",
           options: ["Duran Duran", "The Human League", "Depeche Mode", "Tears for Fears"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "nevergonnagiveyouup",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
+          media: { kind: "youtube", youtubeId: "dQw4w9WgXcQ", start: 0, end: 20 },
+          hint: "This exact video became the most famous prank link on the internet.",
+          options: ["Never Gonna Give You Up — Rick Astley", "Together Forever — Rick Astley", "Careless Whisper — George Michael", "It Must Have Been Love — Roxette"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "This song became a massive internet meme/prank, tricking people into clicking a link. What's it called?",
+          media: { kind: "youtube", youtubeId: "dQw4w9WgXcQ", start: 0, end: 20 },
+          hint: "It combines the singer's first name with a common internet term for a prank.",
+          options: ["Rickrolling", "Plankin'", "Tebowing", "The Harlem Shake"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "bohemianrhapsody",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
+          media: { kind: "youtube", youtubeId: "fJ9rUzIMcZQ", start: 0, end: 20 },
+          hint: "It opens a cappella, then builds into a rock opera with a famous operatic mid-section.",
+          options: ["Bohemian Rhapsody — Queen", "We Are the Champions — Queen", "Don't Stop Me Now — Queen", "Somebody to Love — Queen"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which 1975 Queen album features this song?",
+          media: { kind: "youtube", youtubeId: "fJ9rUzIMcZQ", start: 0, end: 20 },
+          hint: "Its title, like the band's next album, references a Marx Brothers film.",
+          options: ["A Night at the Opera", "A Day at the Races", "Jazz", "News of the World"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "dancingqueen",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
+          media: { kind: "youtube", youtubeId: "xFrGuyw1V8s", start: 0, end: 22 },
+          hint: "A glittery Swedish pop group, four members, two of whom were married couples.",
+          options: ["Dancing Queen — ABBA", "Mamma Mia — ABBA", "Waterloo — ABBA", "Super Trouper — ABBA"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "This was ABBA's only single to reach #1 on the US Billboard Hot 100. What year did it get there?",
+          media: { kind: "youtube", youtubeId: "xFrGuyw1V8s", start: 0, end: 22 },
+          hint: "The same year the original Star Wars first hit theatres.",
+          options: ["1977", "1976", "1978", "1974"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "billiejean",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
+          media: { kind: "youtube", youtubeId: "Zi_XLOBDo_Y", start: 0, end: 20 },
+          hint: "That iconic bassline, and a light-up sidewalk in the music video.",
+          options: ["Billie Jean — Michael Jackson", "Beat It — Michael Jackson", "Thriller — Michael Jackson", "Smooth Criminal — Michael Jackson"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which album — the best-selling album of all time — features this song?",
+          media: { kind: "youtube", youtubeId: "Zi_XLOBDo_Y", start: 0, end: 20 },
+          hint: "Its title track has an equally famous zombie-filled music video.",
+          options: ["Thriller", "Bad", "Off the Wall", "Dangerous"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "sweetchildomine",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
+          media: { kind: "youtube", youtubeId: "1w7OgIMMRc4", start: 0, end: 20 },
+          hint: "That instantly recognisable opening guitar riff.",
+          options: ["Sweet Child O' Mine — Guns N' Roses", "Paradise City — Guns N' Roses", "November Rain — Guns N' Roses", "Welcome to the Jungle — Guns N' Roses"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which 1987 debut studio album by Guns N' Roses — the best-selling debut album in U.S. history — features this song?",
+          media: { kind: "youtube", youtubeId: "1w7OgIMMRc4", start: 0, end: 20 },
+          hint: "Its title suggests you shouldn't judge it by its cover.",
+          options: ["Appetite for Destruction", "Use Your Illusion I", "Use Your Illusion II", "G N' R Lies"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "wannabe",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
+          media: { kind: "youtube", youtubeId: "gJLIiF15wjQ", start: 0, end: 20 },
+          hint: "\"If you wanna be my lover...\" — a 90s girl group's debut single.",
+          options: ["Wannabe — Spice Girls", "Say You'll Be There — Spice Girls", "Spice Up Your Life — Spice Girls", "Stop — Spice Girls"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "'Wannabe' was the Spice Girls' debut single, released in which year?",
+          media: { kind: "youtube", youtubeId: "gJLIiF15wjQ", start: 0, end: 20 },
+          hint: "The same year England hosted the Euro football championship.",
+          options: ["1996", "1994", "1997", "1998"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "africa",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
+          media: { kind: "youtube", youtubeId: "FTQbiNvZqaY", start: 0, end: 22 },
+          hint: "\"I hear the drums echoing tonight...\" — an American rock band named after a toilet brand.",
+          options: ["Africa — Toto", "Rosanna — Toto", "Hold the Line — Toto", "I Won't Hold You Back — Toto"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "This song topped the US Billboard Hot 100 in which year?",
+          media: { kind: "youtube", youtubeId: "FTQbiNvZqaY", start: 0, end: 22 },
+          hint: "The same year Michael Jackson's 'Billie Jean' also hit #1.",
+          options: ["1983", "1982", "1985", "1980"], answerIndex: 0 }
       ]
     }
   ],
 
   /* ------------------------------------------------------------------------
-     GENERAL KNOWLEDGE — sample topics.
+     GENERAL KNOWLEDGE — mixed tape.
   ------------------------------------------------------------------------ */
   general: [
     {
@@ -370,11 +463,99 @@ const QUIZ_DATA = {
           hint: "It's the only Australian state that's an island.",
           options: ["Tasmania", "Victoria", "South Australia", "Queensland"], answerIndex: 0 }
       ]
+    },
+    {
+      id: "worldflags",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Which country's flag features a red maple leaf?",
+          hint: "Its national anthem starts \"O Canada.\"",
+          options: ["Canada", "USA", "Norway", "Ireland"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which country has the only national flag that isn't a four-sided rectangle or square?",
+          hint: "It's actually two overlapping triangular pennants, flown in the Himalayas.",
+          options: ["Nepal", "Switzerland", "Bhutan", "Qatar"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "elements",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "What is the chemical symbol for gold?",
+          hint: "It comes from the element's Latin name, 'aurum.'",
+          options: ["Au", "Go", "Gd", "Ag"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which metal has the highest melting point of any element?",
+          hint: "Its filament used to glow white-hot inside old incandescent light bulbs.",
+          options: ["Tungsten", "Osmium", "Iridium", "Rhenium"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "historyww",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "In which year did World War II end?",
+          hint: "Nine years after it began in Europe.",
+          options: ["1943", "1945", "1947", "1950"], answerIndex: 1 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which treaty formally ended World War I?",
+          hint: "Signed in the Hall of Mirrors at a famous French palace.",
+          options: ["Treaty of Versailles", "Treaty of Paris", "Treaty of Vienna", "Congress of Berlin"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "literature",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Who wrote the Harry Potter series?",
+          hint: "Her initials are J.K.",
+          options: ["J.K. Rowling", "Roald Dahl", "C.S. Lewis", "Enid Blyton"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "What was the real name of the author who wrote under the pen name \"Mark Twain\"?",
+          hint: "His real surname is also a word for a strong grip or a tool for holding things.",
+          options: ["Samuel Clemens", "Samuel Adams", "Nathaniel Hawthorne", "Herman Melville"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "sportsfifa",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "How many players does each football (soccer) team have on the pitch at once?",
+          hint: "One of them wears gloves and guards the goal.",
+          options: ["9", "10", "11", "12"], answerIndex: 2 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which country has won the most FIFA World Cup titles?",
+          hint: "Their national team is nicknamed \"Seleção.\"",
+          options: ["Brazil", "Germany", "Italy", "Argentina"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "capitalcities",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "What is the capital city of France?",
+          hint: "Home to the Eiffel Tower.",
+          options: ["Paris", "Lyon", "Marseille", "Nice"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which African country officially has three capital cities?",
+          hint: "Its executive, judicial and legislative capitals are all different cities.",
+          options: ["South Africa", "Nigeria", "Kenya", "Egypt"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "language",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "How many official languages does Switzerland have?",
+          hint: "They include German, French and Italian.",
+          options: ["2", "3", "4", "5"], answerIndex: 2 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which language has the most native speakers of any language in the world?",
+          hint: "Largely thanks to one country's enormous population.",
+          options: ["Mandarin Chinese", "English", "Spanish", "Hindi"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "foodanddrink",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Sushi originates from which country?",
+          hint: "Also famous for cherry blossoms and Mount Fuji.",
+          options: ["Japan", "China", "Thailand", "South Korea"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which spice, derived from a crocus flower, is the most expensive by weight in the world?",
+          hint: "It takes tens of thousands of hand-picked flower threads to produce just one pound.",
+          options: ["Saffron", "Vanilla", "Cardamom", "Cinnamon"], answerIndex: 0 }
+      ]
     }
   ],
 
   /* ------------------------------------------------------------------------
-     1986 — the birth year round. Swap in a real photo for the picture round.
+     1986 — the birth year round.
   ------------------------------------------------------------------------ */
   y1986: [
     {
@@ -391,13 +572,100 @@ const QUIZ_DATA = {
     {
       id: "consoles1986",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "What iconic games console launched in the UK in 1986? (swap the image path for a real one)",
-          media: { kind: "image", src: "images/aladdin-4746l.jpg" },
+        { difficulty: "easy", type: "multiple_choice", prompt: "What iconic games console launched in the UK in 1986?",
           hint: "Grey box, two rectangular controllers, launched alongside Super Mario Bros.",
           options: ["The Nintendo Entertainment System", "The Sony Walkman", "The first CD player", "The VHS camcorder"], answerIndex: 0 },
-        { difficulty: "hard", type: "multiple_choice", prompt: "The NES launched in the UK in 1986 \u2014 but which country got it first, in 1985?",
+        { difficulty: "hard", type: "multiple_choice", prompt: "The NES launched in the UK in 1986 — but which country got it first, in 1985?",
           hint: "Same country that gave the world Silicon Valley.",
           options: ["Japan", "USA", "France", "Canada"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "movies1986",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Which Tom Cruise fighter-pilot film was released in 1986?",
+          hint: "\"I feel the need... the need for speed.\"",
+          options: ["Top Gun", "Days of Thunder", "The Right Stuff", "Iron Eagle"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which 1986 David Lynch film, starring Kyle MacLachlan, is famous for its severed-ear opening scene?",
+          hint: "Also stars Isabella Rossellini and Dennis Hopper.",
+          options: ["Blue Velvet", "Blade Runner", "The Elephant Man", "Eraserhead"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "music1986",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Which artist released the groundbreaking claymation music video for \"Sledgehammer\" in 1986?",
+          hint: "Former lead singer of Genesis, went solo.",
+          options: ["Peter Gabriel", "Phil Collins", "Sting", "David Bowie"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which 1986 album became Bon Jovi's breakthrough, featuring \"Livin' on a Prayer\"?",
+          hint: "Its title describes a precarious, risky situation.",
+          options: ["Slippery When Wet", "7800° Fahrenheit", "New Jersey", "Keep the Faith"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "sports1986",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Argentina won the 1986 FIFA World Cup, held in which country?",
+          hint: "It's the same country that also hosted the 1970 World Cup.",
+          options: ["Mexico", "Spain", "Italy", "Brazil"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which Argentine footballer scored the infamous \"Hand of God\" goal at the 1986 World Cup?",
+          hint: "He also scored the \"Goal of the Century\" in the very same match, against England.",
+          options: ["Diego Maradona", "Jorge Valdano", "Carlos Bilardo", "Gary Lineker"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "royals1986",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Which British royal couple married in 1986?",
+          hint: "He's the Queen's second son; she later became famous for the nickname \"Fergie.\"",
+          options: ["Prince Andrew and Sarah Ferguson", "Prince Charles and Diana", "Prince Edward and Sophie", "Princess Anne and Mark Phillips"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "What title was bestowed on Prince Andrew and Sarah Ferguson upon their 1986 marriage?",
+          hint: "The same ducal title once held by Andrew's grandfather, before he became King George VI.",
+          options: ["Duke and Duchess of York", "Duke and Duchess of Kent", "Earl and Countess of Wessex", "Duke and Duchess of Sussex"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "space1986",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Which famous comet, visible roughly once every 76 years, made an appearance in 1986?",
+          hint: "Named after the astronomer who calculated its orbit.",
+          options: ["Halley's Comet", "Hale-Bopp", "Comet NEOWISE", "Comet Encke"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "What was the name of the Soviet space station that began operation in 1986 and stayed in orbit until 2001?",
+          hint: "Its name means \"peace\" or \"world\" in Russian.",
+          options: ["Mir", "Salyut 7", "Skylab", "Vostok"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "politics1986",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Who was President of the United States in 1986?",
+          hint: "A former Hollywood actor.",
+          options: ["Ronald Reagan", "Jimmy Carter", "George H.W. Bush", "Bill Clinton"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "Which US political scandal — covert arms sales to Iran used to fund Contra rebels in Nicaragua — broke into public view in 1986?",
+          hint: "It involved a Marine officer named Oliver North.",
+          options: ["Iran-Contra Affair", "Watergate", "Whitewater", "Teapot Dome"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "disasters1986",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "In 1986, a natural disaster in Cameroon released a deadly cloud of gas from a volcanic lake, killing over 1,700 people. What gas was it?",
+          hint: "The same gas you breathe out.",
+          options: ["Carbon dioxide", "Methane", "Hydrogen sulfide", "Chlorine"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the Cameroonian crater lake responsible for the deadly 1986 gas disaster?",
+          hint: "A smaller, similar disaster happened at nearby Lake Monoun two years earlier, in 1984.",
+          options: ["Lake Nyos", "Lake Kivu", "Lake Monoun", "Lake Victoria"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "astronomy1986",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice", prompt: "Which planet did NASA's Voyager 2 spacecraft fly past in January 1986?",
+          hint: "It's the seventh planet from the sun and rotates on its side.",
+          options: ["Uranus", "Neptune", "Saturn", "Jupiter"], answerIndex: 0 },
+        { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the largest moon of Uranus, imaged in detail for the first time by Voyager 2's 1986 flyby?",
+          hint: "Named after the Queen of the Fairies in Shakespeare's 'A Midsummer Night's Dream.'",
+          options: ["Titania", "Miranda", "Oberon", "Ariel"], answerIndex: 0 }
       ]
     }
   ],
