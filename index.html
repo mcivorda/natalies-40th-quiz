@@ -49,6 +49,10 @@
       <img src="images/quiz-qr.png" alt="QR code linking to this quiz" class="share-qr-img">
       <p class="share-qr-url" id="share-qr-url"></p>
     </div>
+
+    <div class="reset-quiz-row">
+      <button type="button" class="btn small muted" id="btn-reset-quiz" onclick="resetQuizProgress()">&#8635; RESET TEST PROGRESS</button>
+    </div>
   </section>
 
   <!-- ============= MOVIES SHELF ============= -->
@@ -70,6 +74,7 @@
   <section id="screen-player" class="screen">
     <div class="topbar">
       <button class="btn pink" onclick="rewatchShelf()">&larr; BACK</button>
+      <button class="btn yellow" id="btn-restart-round" onclick="restartRound()">&#8635; RESTART ROUND</button>
       <div class="scoreboard" id="scoreboard-mini"></div>
     </div>
 
@@ -151,6 +156,20 @@
       <p class="final-privacy-note">Shown on this screen only — nothing here is saved or sent anywhere.</p>
     </div>
   </section>
+
+  <!-- ============= RESET PASSWORD MODAL ============= -->
+  <div class="modal-overlay" id="reset-modal" style="display:none;">
+    <div class="modal-card">
+      <h3 class="neon-pink">RESET PROGRESS</h3>
+      <p class="modal-copy">Enter the reset password to clear the score, answered count, and rented movie tapes.</p>
+      <input type="password" id="reset-password-input" class="modal-input" placeholder="password" autocomplete="off">
+      <div class="modal-error" id="reset-modal-error"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn" id="btn-reset-cancel">CANCEL</button>
+        <button type="button" class="btn pink" id="btn-reset-confirm">CONFIRM</button>
+      </div>
+    </div>
+  </div>
 
 </div>
 

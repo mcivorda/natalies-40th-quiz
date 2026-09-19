@@ -15,7 +15,8 @@ const state = {
   currentQueue: [],   // array of {topic, sourceLabel}
   currentIndex: 0,
   currentTapeTitle: null,
-  roundHistory: []    // [{ label, correct, answered, score }] -- one entry per completed tape, this session only
+  roundHistory: [],   // [{ label, correct, answered, score }] -- one entry per completed tape, this session only
+  answeredMovieIds: new Set()  // movie ids already played from the shelf -- these get stamped "RENTED" and disabled
 };
 
 const SPINE_COLORS = ["#ff2e9a", "#00fff2", "#faff00", "#7c4dff", "#38ff8a", "#ff7a3d"];
@@ -24,6 +25,16 @@ document.addEventListener("DOMContentLoaded", () => {
   boot();
   document.getElementById("player-name").addEventListener("input", (e) => {
     state.playerName = e.target.value;
+  });
+
+  document.getElementById("btn-reset-confirm").addEventListener("click", submitResetPassword);
+  document.getElementById("btn-reset-cancel").addEventListener("click", closeResetModal);
+  document.getElementById("reset-modal").addEventListener("click", (e) => {
+    if (e.target.id === "reset-modal") closeResetModal();
+  });
+  document.getElementById("reset-password-input").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") submitResetPassword();
+    if (e.key === "Escape") closeResetModal();
   });
 });
 
@@ -144,13 +155,20 @@ function buildShelf(){
   shelf.innerHTML = "";
   QUIZ_DATA.movies.forEach((movie, i) => {
     const glow = SPINE_COLORS[i % SPINE_COLORS.length];
+    const isRented = state.answeredMovieIds.has(movie.id);
     const spine = document.createElement("button");
-    spine.className = "spine";
+    spine.className = "spine" + (isRented ? " spine--rented" : "");
     spine.style.setProperty("--spine-glow", glow);
-    spine.setAttribute("aria-label", "Play " + movie.title);
+    spine.setAttribute("aria-label", (isRented ? "Already watched: " : "Play ") + movie.title);
     spine.dataset.movieId = movie.id;
-    spine.innerHTML = `<img src="${movie.spine || movie.file}" alt="${escapeHtml(movie.title)} spine">`;
-    spine.addEventListener("click", () => selectMovie(movie, spine));
+    spine.disabled = isRented;
+    spine.innerHTML = `
+      <img src="${movie.spine || movie.file}" alt="${escapeHtml(movie.title)} spine">
+      ${isRented ? '<span class="rented-stamp">RENTED</span>' : ""}
+    `;
+    if (!isRented){
+      spine.addEventListener("click", () => selectMovie(movie, spine));
+    }
     shelf.appendChild(spine);
   });
 }
@@ -211,7 +229,7 @@ function setupCoverPlayer(movie, flipFrom){
     runShelfFlip(stage, flipFrom.rect);
   } else {
     stage.classList.add("pop-in");
-    stage.innerHTML = `<img class="cover-img" src="${movie.file}" alt="${escapeHtml(movie.title)} VHS cover">`;
+    stage.innerHTML = `<img class="cover-img" src="${movie.file}" alt="${escapeHtml(movie.title)} VHS cover" style="opacity:1">`;
   }
 
   const playBtn = document.getElementById("btn-play-tape");
@@ -392,7 +410,13 @@ function renderQuestion(difficulty){
         setupVideoTrim(media.querySelector("video"), m.start || 0, m.end);
       }
     } else if (m.kind === "youtube" && m.youtubeId){
-      setupMaskedYouTube(media, m.youtubeId, m.start, m.end);
+      if (m.masked){
+        setupMaskedYouTube(media, m.youtubeId, m.start, m.end);
+      } else if (m.maskDuration){
+        setupVisibleTimerHiddenYouTube(media, m.youtubeId, m.start, m.end);
+      } else {
+        setupVisibleYouTubeEmbed(media, m.youtubeId, m.start, m.end);
+      }
     }
   }
 
@@ -514,7 +538,11 @@ function setupVideoTrim(video, start, end){
    button, built with the YouTube IFrame Player API so we can drive
    play/pause without touching YouTube's real UI at all. */
 let ytApiLoadPromise = null;
-let currentYtPlayer = null;
+// Home Movies "attempts" can put several YouTube players on screen across
+// one question (the preview clip plus whichever attempt(s) have been
+// revealed), so track all of them for cleanup, not just one.
+let ytPlayers = [];
+let currentYtPlayer = null; // alias to the most recently created player
 
 function loadYouTubeAPI(){
   if (window.YT && window.YT.Player) return Promise.resolve();
@@ -532,11 +560,15 @@ function loadYouTubeAPI(){
   return ytApiLoadPromise;
 }
 
+function trackYtPlayer(player){
+  ytPlayers.push(player);
+  currentYtPlayer = player;
+}
+
 function destroyMaskedYouTube(){
-  if (currentYtPlayer){
-    try { currentYtPlayer.destroy(); } catch (e) {}
-    currentYtPlayer = null;
-  }
+  ytPlayers.forEach(p => { try { p.destroy(); } catch (e) {} });
+  ytPlayers = [];
+  currentYtPlayer = null;
 }
 
 async function setupMaskedYouTube(container, youtubeId, start, end){
@@ -597,7 +629,7 @@ async function setupMaskedYouTube(container, youtubeId, start, end){
       }
     }
   });
-  currentYtPlayer = player;
+  trackYtPlayer(player);
 
   playBtn.onclick = () => {
     if (playBtn.disabled) return;
@@ -608,6 +640,83 @@ async function setupMaskedYouTube(container, youtubeId, start, end){
       player.playVideo();
     } catch (e) {
       label.textContent = "COULDN'T PLAY — TRY AGAIN";
+      playBtn.style.display = "inline-block";
+      playBtn.textContent = "▶ PLAY CLIP";
+    }
+  };
+}
+
+/* ---------------------------- visible YouTube (Home Movies) ---------------------------- */
+/* Unlike Music, Home Movies clips are meant to be watched -- the clip IS the
+   question. Two flavours:
+     - setupVisibleYouTubeEmbed: a plain, fully-native YouTube embed (native
+       controls, visible thumbnail/title/duration). Fine for the clips where
+       nothing about the player itself gives away the answer.
+     - setupVisibleTimerHiddenYouTube: for the handful of clips where the
+       clip's own LENGTH is the answer (a "how long..." question). The video
+       is fully visible and playable, but YouTube's native controls are
+       replaced with a bare play/replay button so no timer can be read off
+       the scrubber before it's revealed. (Unlike local <video>, a YouTube
+       iframe is cross-origin -- our CSS can't reach in and hide just the
+       timer the way maskDuration does for local files, so this rebuilds a
+       minimal control surface instead of trying to selectively hide one.) */
+function setupVisibleYouTubeEmbed(container, youtubeId, start, end){
+  const params = new URLSearchParams({ rel: "0", modestbranding: "1" });
+  if (start != null) params.set("start", start);
+  if (end != null) params.set("end", end);
+  container.innerHTML = `<div class="yt-embed"><iframe src="https://www.youtube-nocookie.com/embed/${youtubeId}?${params.toString()}" title="YouTube clip" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+}
+
+async function setupVisibleTimerHiddenYouTube(container, youtubeId, start, end){
+  container.innerHTML = `
+    <div class="yt-embed yt-embed--timerhidden">
+      <div class="yt-visible-target"></div>
+      <button type="button" class="btn yellow yt-visible-playbtn">▶ PLAY CLIP</button>
+    </div>
+  `;
+  const targetEl = container.querySelector(".yt-visible-target");
+  const playBtn = container.querySelector(".yt-visible-playbtn");
+
+  playBtn.disabled = true;
+  playBtn.textContent = "LOADING…";
+
+  await loadYouTubeAPI();
+  // the question may have moved on while the API script was loading
+  if (!container.contains(targetEl)) return;
+
+  const playerVars = {
+    controls: 0, disablekb: 1, fs: 0, iv_load_policy: 3,
+    modestbranding: 1, rel: 0, playsinline: 1, start: start || 0
+  };
+  if (end != null) playerVars.end = end;
+
+  const player = new YT.Player(targetEl, {
+    host: "https://www.youtube-nocookie.com",
+    videoId: youtubeId,
+    playerVars,
+    events: {
+      onReady: (e) => {
+        e.target.getIframe().classList.add("yt-visible-frame");
+        playBtn.disabled = false;
+        playBtn.textContent = "▶ PLAY CLIP";
+      },
+      onStateChange: (e) => {
+        if (e.data === YT.PlayerState.ENDED){
+          playBtn.textContent = "▶ REPLAY CLIP";
+          playBtn.style.display = "inline-block";
+        }
+      }
+    }
+  });
+  trackYtPlayer(player);
+
+  playBtn.onclick = () => {
+    if (playBtn.disabled) return;
+    playBtn.style.display = "none";
+    try {
+      player.seekTo(start || 0, true);
+      player.playVideo();
+    } catch (e) {
       playBtn.style.display = "inline-block";
       playBtn.textContent = "▶ PLAY CLIP";
     }
@@ -632,13 +741,23 @@ function showAttempt(attempts, idx, wrap, nextBtn){
   const attempt = attempts[idx];
   const block = document.createElement("div");
   block.className = "answer-clip";
+  // Attempts can come from a local file (src) or a YouTube clip
+  // (youtubeId) -- either way the timer stays hidden, since the clip's
+  // own length is always the answer for this "attempts" format.
+  const mediaHtml = attempt.youtubeId
+    ? `<div class="yt-attempt-holder"></div>`
+    : `<video controls class="mask-duration" src="${encodeURI(attempt.src)}"></video>`;
   block.innerHTML = `
     <div class="answer-clip-label">${escapeHtml(attempt.label || "")}</div>
-    <video controls class="mask-duration" src="${encodeURI(attempt.src)}"></video>
+    ${mediaHtml}
     <button type="button" class="btn yellow attempt-reveal-btn">REVEAL ANSWER</button>
     <div class="answer-text-line attempt-answer-text" style="display:none;"></div>
   `;
   wrap.appendChild(block);
+
+  if (attempt.youtubeId){
+    setupVisibleTimerHiddenYouTube(block.querySelector(".yt-attempt-holder"), attempt.youtubeId, attempt.start, attempt.end);
+  }
 
   const revealBtn = block.querySelector(".attempt-reveal-btn");
   const answerLine = block.querySelector(".attempt-answer-text");
@@ -715,6 +834,29 @@ function flashFeedback(isCorrect){
   fb.className = "feedback " + (isCorrect ? "good" : "bad");
 }
 
+/* "RESTART ROUND" -- undoes just the tape currently in progress (score,
+   answered/correct counts, question index) so a misclick doesn't force a
+   full reset. Rounds already finished (in roundHistory, or a movie already
+   stamped RENTED) are untouched since this only runs before finishTape(). */
+function restartRound(){
+  if (!state.currentQueue.length) return;
+  destroyMaskedYouTube();
+  state.score -= state.tapeScore;
+  state.answered -= state.tapeAnswered;
+  state.correct -= state.tapeCorrect;
+  state.tapeAnswered = 0;
+  state.tapeCorrect = 0;
+  state.tapeScore = 0;
+  state.currentIndex = 0;
+  updateScoreboard();
+
+  if (state.currentCategory === "movies"){
+    setupCoverPlayer(state.currentQueue[0].topic, null);
+  } else {
+    setupBlankPlayer(state.currentTapeTitle || labelFor(state.currentCategory));
+  }
+}
+
 function nextQuestion(){
   state.currentIndex++;
   if (state.currentIndex >= state.currentQueue.length){
@@ -726,6 +868,11 @@ function nextQuestion(){
 
 function finishTape(){
   destroyMaskedYouTube();
+  if (state.currentCategory === "movies"){
+    state.currentQueue.forEach(item => {
+      if (item.topic && item.topic.id) state.answeredMovieIds.add(item.topic.id);
+    });
+  }
   state.roundHistory.push({
     label: state.currentTapeTitle || "",
     correct: state.tapeCorrect,
@@ -771,6 +918,60 @@ function showFinalScore(){
 
 function playAnother(){
   destroyMaskedYouTube();
+  buildWelcome();
+  showScreen("welcome");
+}
+
+/* "RESET" -- wipes score/progress from a walkthrough/test run so guests
+   start with a clean scoreboard and an un-rented shelf on the night.
+   Uses an in-page modal rather than prompt()/confirm() -- some embedded
+   browser contexts (this app's own preview tooling included) block native
+   JS dialogs outright, which silently no-ops the whole flow. */
+function resetQuizProgress(){
+  const modal = document.getElementById("reset-modal");
+  const input = document.getElementById("reset-password-input");
+  const errorEl = document.getElementById("reset-modal-error");
+  input.value = "";
+  errorEl.textContent = "";
+  modal.style.display = "flex";
+  input.focus();
+}
+
+function closeResetModal(){
+  document.getElementById("reset-modal").style.display = "none";
+}
+
+function submitResetPassword(){
+  const input = document.getElementById("reset-password-input");
+  const errorEl = document.getElementById("reset-modal-error");
+  const entered = (input.value || "").trim().toLowerCase();
+  if (entered !== "reset"){
+    errorEl.textContent = "Incorrect password.";
+    input.value = "";
+    input.focus();
+    return;
+  }
+  closeResetModal();
+  performQuizReset();
+}
+
+function performQuizReset(){
+  destroyMaskedYouTube();
+  state.playerName = "";
+  state.score = 0;
+  state.answered = 0;
+  state.correct = 0;
+  state.tapeAnswered = 0;
+  state.tapeCorrect = 0;
+  state.tapeScore = 0;
+  state.currentCategory = null;
+  state.currentQueue = [];
+  state.currentIndex = 0;
+  state.currentTapeTitle = null;
+  state.roundHistory = [];
+  state.answeredMovieIds = new Set();
+  const nameInput = document.getElementById("player-name");
+  if (nameInput) nameInput.value = "";
   buildWelcome();
   showScreen("welcome");
 }

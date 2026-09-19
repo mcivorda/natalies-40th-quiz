@@ -27,7 +27,12 @@
                                   REVEAL ANSWER button; revealing one attempt
                                   is what brings the next one on screen. Use
                                   this for a "guess, reveal, guess again"
-                                  round like three timed attempts.
+                                  round like three timed attempts. Each
+                                  attempt can be a local file (src) or a
+                                  YouTube clip (youtubeId, start, end) --
+                                  either way the timer stays hidden, since
+                                  the point of "attempts" is always a timed
+                                  reveal.
                               Ungraded either way: doesn't affect score, just
                               a watch-and-reveal round.
 
@@ -51,12 +56,31 @@
                                  automatically, since those are always
                                  reveal clips.)
      { kind: "youtube", youtubeId: "XXXXXXXXXXX",
-       start: 0, end: 15 }   -> embeds the OFFICIAL YouTube video/audio for a
-                                 song, streamed straight from YouTube (not a
+       start: 0, end: 15,
+       masked: true,
+       maskDuration: true }  -> embeds the OFFICIAL YouTube video/audio for a
+                                 clip, streamed straight from YouTube (not a
                                  downloaded copy). start/end (seconds) are
-                                 optional and trim the clip for a "name that
-                                 tune"-style reveal. Find a video's ID in its
-                                 URL: youtube.com/watch?v=THIS_PART
+                                 optional and trim the clip. Find a video's
+                                 ID in its URL: youtube.com/watch?v=THIS_PART
+                                 Three ways it can render (pick ONE flag):
+                                   - neither flag -> plays visibly with
+                                     YouTube's normal native controls. Use
+                                     this whenever watching the clip freely
+                                     doesn't give away the answer (most
+                                     Home Movies clips).
+                                   - masked: true -> the player is fully
+                                     invisible (opacity:0, audio only) behind
+                                     our own "mystery track" cover -- use for
+                                     "name that tune"-style questions where
+                                     SEEING the video would spoil it (Music).
+                                   - maskDuration: true -> video stays fully
+                                     VISIBLE and playable, but native
+                                     controls are replaced with a bare play
+                                     button so the timer can't be read off
+                                     the scrubber -- use when the clip's own
+                                     LENGTH is the answer (a "how long..."
+                                     Home Movies question).
 
    Every question also accepts an optional "points" (defaults: easy 50,
    hard 75, if you don't set one).
@@ -90,6 +114,7 @@ const QUIZ_DATA = {
     { id: "music",      label: "MUSIC",               sub: "name that tune",       color: "#00fff2", glow: "#00fff2" },
     { id: "general",    label: "GENERAL KNOWLEDGE",   sub: "mixed tape",           color: "#faff00", glow: "#faff00" },
     { id: "y1986",      label: "1986",                sub: "the year itself",     color: "#7c4dff", glow: "#a06bff" },
+    { id: "homemovies", label: "HOME MOVIES",         sub: "22 real Natalie moments", color: "#38ff8a", glow: "#38ff8a" }
   ],
 
   /* ------------------------------------------------------------------------
@@ -310,11 +335,11 @@ const QUIZ_DATA = {
       id: "nameThatTune",
       questions: [
         { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
-          media: { kind: "youtube", youtubeId: "djV11Xbc914", start: 0, end: 15 },
+          media: { kind: "youtube", youtubeId: "djV11Xbc914", start: 0, end: 15, masked: true },
           hint: "Think 80s synth-pop, and a music video famous for its pencil-sketch animation.",
           options: ["Take On Me — a-ha", "Wake Me Up Before You Go-Go — Wham!", "Girls Just Want to Have Fun — Cyndi Lauper", "Livin' on a Prayer — Bon Jovi"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "Same clip — what year was it originally released?",
-          media: { kind: "youtube", youtubeId: "djV11Xbc914", start: 0, end: 15 },
+          media: { kind: "youtube", youtubeId: "djV11Xbc914", start: 0, end: 15, masked: true },
           hint: "Same year the first Back to the Future film came out.",
           options: ["1983", "1985", "1987", "1989"], answerIndex: 1 }
       ]
@@ -323,11 +348,11 @@ const QUIZ_DATA = {
       id: "iwillalwaysloveyou",
       questions: [
         { difficulty: "easy", type: "multiple_choice", prompt: "Whitney Houston's version of ‘I Will Always Love You’ was written by which country legend?",
-          media: { kind: "youtube", youtubeId: "T9Ybsvw_0p4", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "T9Ybsvw_0p4", start: 0, end: 20, masked: true },
           hint: "She's nearly as famous for her own hits as for writing this one — and she owns a Tennessee theme park.",
           options: ["Reba McEntire", "Dolly Parton", "Tammy Wynette", "Loretta Lynn"], answerIndex: 1 },
         { difficulty: "hard", type: "multiple_choice", prompt: "Whitney Houston's version topped the charts in 1992 as the lead single from which film's soundtrack?",
-          media: { kind: "youtube", youtubeId: "T9Ybsvw_0p4", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "T9Ybsvw_0p4", start: 0, end: 20, masked: true },
           hint: "Whitney Houston also starred in this film, opposite Kevin Costner.",
           options: ["The Bodyguard", "Waiting to Exhale", "The Preacher's Wife", "Sister Act"], answerIndex: 0 }
       ]
@@ -336,11 +361,11 @@ const QUIZ_DATA = {
       id: "dontyouwantme",
       questions: [
         { difficulty: "easy", type: "text", prompt: "Complete the lyric: ‘Don't you want me, baby? Don't you want me...’",
-          media: { kind: "youtube", youtubeId: "uPudE8nDog0", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "uPudE8nDog0", start: 0, end: 20, masked: true },
           hint: "It's a short ad-lib — the same syllable, repeated three times.",
           answerText: "oh oh oh", accepted: ["oh oh oh oh", "oh, oh, oh"] },
         { difficulty: "hard", type: "multiple_choice", prompt: "‘Don't You Want Me’ was a 1981 UK Christmas #1 for which band?",
-          media: { kind: "youtube", youtubeId: "uPudE8nDog0", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "uPudE8nDog0", start: 0, end: 20, masked: true },
           hint: "British synth-pop pioneers, named after a sci-fi organisation.",
           options: ["Duran Duran", "The Human League", "Depeche Mode", "Tears for Fears"], answerIndex: 1 }
       ]
@@ -349,11 +374,11 @@ const QUIZ_DATA = {
       id: "nevergonnagiveyouup",
       questions: [
         { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
-          media: { kind: "youtube", youtubeId: "dQw4w9WgXcQ", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "dQw4w9WgXcQ", start: 0, end: 20, masked: true },
           hint: "This exact video became the most famous prank link on the internet.",
           options: ["Never Gonna Give You Up — Rick Astley", "Together Forever — Rick Astley", "Careless Whisper — George Michael", "It Must Have Been Love — Roxette"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "This song became a massive internet meme/prank, tricking people into clicking a link. What's it called?",
-          media: { kind: "youtube", youtubeId: "dQw4w9WgXcQ", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "dQw4w9WgXcQ", start: 0, end: 20, masked: true },
           hint: "It combines the singer's first name with a common internet term for a prank.",
           options: ["Rickrolling", "Plankin'", "Tebowing", "The Harlem Shake"], answerIndex: 0 }
       ]
@@ -362,11 +387,11 @@ const QUIZ_DATA = {
       id: "bohemianrhapsody",
       questions: [
         { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
-          media: { kind: "youtube", youtubeId: "fJ9rUzIMcZQ", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "fJ9rUzIMcZQ", start: 0, end: 20, masked: true },
           hint: "It opens a cappella, then builds into a rock opera with a famous operatic mid-section.",
           options: ["Bohemian Rhapsody — Queen", "We Are the Champions — Queen", "Don't Stop Me Now — Queen", "Somebody to Love — Queen"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "Which 1975 Queen album features this song?",
-          media: { kind: "youtube", youtubeId: "fJ9rUzIMcZQ", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "fJ9rUzIMcZQ", start: 0, end: 20, masked: true },
           hint: "Its title, like the band's next album, references a Marx Brothers film.",
           options: ["A Night at the Opera", "A Day at the Races", "Jazz", "News of the World"], answerIndex: 0 }
       ]
@@ -375,11 +400,11 @@ const QUIZ_DATA = {
       id: "dancingqueen",
       questions: [
         { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
-          media: { kind: "youtube", youtubeId: "xFrGuyw1V8s", start: 0, end: 22 },
+          media: { kind: "youtube", youtubeId: "xFrGuyw1V8s", start: 0, end: 22, masked: true },
           hint: "A glittery Swedish pop group, four members, two of whom were married couples.",
           options: ["Dancing Queen — ABBA", "Mamma Mia — ABBA", "Waterloo — ABBA", "Super Trouper — ABBA"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "This was ABBA's only single to reach #1 on the US Billboard Hot 100. What year did it get there?",
-          media: { kind: "youtube", youtubeId: "xFrGuyw1V8s", start: 0, end: 22 },
+          media: { kind: "youtube", youtubeId: "xFrGuyw1V8s", start: 0, end: 22, masked: true },
           hint: "The same year the original Star Wars first hit theatres.",
           options: ["1977", "1976", "1978", "1974"], answerIndex: 0 }
       ]
@@ -388,11 +413,11 @@ const QUIZ_DATA = {
       id: "billiejean",
       questions: [
         { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
-          media: { kind: "youtube", youtubeId: "Zi_XLOBDo_Y", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "Zi_XLOBDo_Y", start: 0, end: 20, masked: true },
           hint: "That iconic bassline, and a light-up sidewalk in the music video.",
           options: ["Billie Jean — Michael Jackson", "Beat It — Michael Jackson", "Thriller — Michael Jackson", "Smooth Criminal — Michael Jackson"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "Which album — the best-selling album of all time — features this song?",
-          media: { kind: "youtube", youtubeId: "Zi_XLOBDo_Y", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "Zi_XLOBDo_Y", start: 0, end: 20, masked: true },
           hint: "Its title track has an equally famous zombie-filled music video.",
           options: ["Thriller", "Bad", "Off the Wall", "Dangerous"], answerIndex: 0 }
       ]
@@ -401,11 +426,11 @@ const QUIZ_DATA = {
       id: "sweetchildomine",
       questions: [
         { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
-          media: { kind: "youtube", youtubeId: "1w7OgIMMRc4", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "1w7OgIMMRc4", start: 0, end: 20, masked: true },
           hint: "That instantly recognisable opening guitar riff.",
           options: ["Sweet Child O' Mine — Guns N' Roses", "Paradise City — Guns N' Roses", "November Rain — Guns N' Roses", "Welcome to the Jungle — Guns N' Roses"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "Which 1987 debut studio album by Guns N' Roses — the best-selling debut album in U.S. history — features this song?",
-          media: { kind: "youtube", youtubeId: "1w7OgIMMRc4", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "1w7OgIMMRc4", start: 0, end: 20, masked: true },
           hint: "Its title suggests you shouldn't judge it by its cover.",
           options: ["Appetite for Destruction", "Use Your Illusion I", "Use Your Illusion II", "G N' R Lies"], answerIndex: 0 }
       ]
@@ -414,11 +439,11 @@ const QUIZ_DATA = {
       id: "wannabe",
       questions: [
         { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
-          media: { kind: "youtube", youtubeId: "gJLIiF15wjQ", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "gJLIiF15wjQ", start: 0, end: 20, masked: true },
           hint: "\"If you wanna be my lover...\" — a 90s girl group's debut single.",
           options: ["Wannabe — Spice Girls", "Say You'll Be There — Spice Girls", "Spice Up Your Life — Spice Girls", "Stop — Spice Girls"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "'Wannabe' was the Spice Girls' debut single, released in which year?",
-          media: { kind: "youtube", youtubeId: "gJLIiF15wjQ", start: 0, end: 20 },
+          media: { kind: "youtube", youtubeId: "gJLIiF15wjQ", start: 0, end: 20, masked: true },
           hint: "The same year England hosted the Euro football championship.",
           options: ["1996", "1994", "1997", "1998"], answerIndex: 0 }
       ]
@@ -427,11 +452,11 @@ const QUIZ_DATA = {
       id: "africa",
       questions: [
         { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune!",
-          media: { kind: "youtube", youtubeId: "FTQbiNvZqaY", start: 0, end: 22 },
+          media: { kind: "youtube", youtubeId: "FTQbiNvZqaY", start: 0, end: 22, masked: true },
           hint: "\"I hear the drums echoing tonight...\" — an American rock band named after a toilet brand.",
           options: ["Africa — Toto", "Rosanna — Toto", "Hold the Line — Toto", "I Won't Hold You Back — Toto"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "This song topped the US Billboard Hot 100 in which year?",
-          media: { kind: "youtube", youtubeId: "FTQbiNvZqaY", start: 0, end: 22 },
+          media: { kind: "youtube", youtubeId: "FTQbiNvZqaY", start: 0, end: 22, masked: true },
           hint: "The same year Michael Jackson's 'Billie Jean' also hit #1.",
           options: ["1983", "1982", "1985", "1980"], answerIndex: 0 }
       ]
@@ -683,5 +708,204 @@ const QUIZ_DATA = {
      right/wrong grading for this type -- it's a watch-and-reveal round for
      the room to call out answers together, so it doesn't affect the score.
   ------------------------------------------------------------------------ */
-  homemovies: [],
+  homemovies: [
+    {
+      id: "dadsbackAttempt1",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Higher or lower — will Natalie stay on Dad's back for MORE or LESS than 15 seconds?",
+          media: { kind: "youtube", youtubeId: "IsVVxFolxnM", maskDuration: true },
+          options: ["Higher — more than 15 seconds", "Lower — less than 15 seconds"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "dadsbackAttempt2",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Attempt 1 lasted 12 seconds. Higher or lower — was Attempt 2 more or less than that?",
+          media: { kind: "youtube", youtubeId: "T7tEWRHWo-4", maskDuration: true },
+          options: ["Higher — more than 12 seconds", "Lower — less than 12 seconds"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "dadsbackAttempt3",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Attempt 2 lasted 11 seconds. Higher or lower — was the FINAL attempt more or less than that?",
+          media: { kind: "youtube", youtubeId: "O7MKTE37NAU", maskDuration: true },
+          options: ["Higher — more than 11 seconds", "Lower — less than 11 seconds"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "keyboardsong",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "What song is Natalie playing on the keyboard?",
+          media: { kind: "youtube", youtubeId: "6pXrPWc2Deg" },
+          options: ["Für Elise", "Greensleeves", "Ode to Joy", "Twinkle Twinkle Little Star"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "disneyBrerFox",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Which Disney character is this, spotted on the family's 1993 Disney trip?",
+          media: { kind: "youtube", youtubeId: "wSwGl5jK6m0" },
+          options: ["Br'er Rabbit", "Br'er Fox", "Br'er Bear", "Uncle Remus"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "disneyTeacups",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Which Disney ride is this, from the family's 1993 Disney trip?",
+          media: { kind: "youtube", youtubeId: "2DnnP8uFzfo" },
+          options: ["It's a Small World", "Peter Pan's Flight", "Teacups at the Mad Hatter's Tea Party", "Dumbo the Flying Elephant"], answerIndex: 2 }
+      ]
+    },
+    {
+      id: "disneyHonestJohn",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Which Disney character is this, spotted on the family's 1993 Disney trip?",
+          media: { kind: "youtube", youtubeId: "rgnRnKKYROQ" },
+          options: ["Jiminy Cricket", "Honest John", "Gepetto", "Stromboli"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "disneyPinnochio",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Which Disney character is this, spotted on the family's 1993 Disney trip?",
+          media: { kind: "youtube", youtubeId: "-Q0o4S7AsgQ" },
+          options: ["Pinnochio", "Peter Pan", "Aladdin", "Mowgli"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "disneyMickey",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Which Disney character is this, spotted on the family's 1993 Disney trip?",
+          media: { kind: "youtube", youtubeId: "gd_WG0OnmuM" },
+          options: ["Donald Duck", "Goofy", "Mickey", "Pluto"], answerIndex: 2 }
+      ]
+    },
+    {
+      id: "disneyPluto",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Which Disney character is this, spotted on the family's 1993 Disney trip?",
+          media: { kind: "youtube", youtubeId: "du5MDSN-ZI0" },
+          options: ["Goofy", "Pluto", "Mickey", "Donald Duck"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "discoInferno",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Natalie's dancing at the disco — name the song!",
+          media: { kind: "youtube", youtubeId: "hUHFd-rKlJ4" },
+          options: ["Y.M.C.A.", "Stayin' Alive", "Disco Inferno", "I Will Survive"], answerIndex: 2 }
+      ]
+    },
+    {
+      id: "discoTimeWarp",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Natalie's dancing at the disco — name the song!",
+          media: { kind: "youtube", youtubeId: "ZGcYKGpQV_A" },
+          options: ["The Locomotion", "Time Warp", "Macarena", "Twist and Shout"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "discoCottonEyedJoe",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Natalie's dancing at the disco — name the song!",
+          media: { kind: "youtube", youtubeId: "USIzRyyZOHA" },
+          options: ["Achy Breaky Heart", "Cotton Eyed Joe", "Come On Eileen", "Electric Boogie"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "rideYkikiWave",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Name this ride!",
+          media: { kind: "youtube", youtubeId: "rPseb6EVKeY" },
+          options: ["Tidal Wave", "Wipeout", "Y-kiki Wave", "Wave Runner"], answerIndex: 2 }
+      ]
+    },
+    {
+      id: "rideChairOPlanes",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Name this ride!",
+          media: { kind: "youtube", youtubeId: "aJ5vvMD7Tok" },
+          options: ["Carousel", "Chair-o Planes", "Big Wheel", "Waltzers"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "rideGalaxy",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Name this ride!",
+          media: { kind: "youtube", youtubeId: "s_rH7KYO3Gw" },
+          options: ["Star Flyer", "Cosmic Bowl", "Galaxy", "Meteorite"], answerIndex: 2 }
+      ]
+    },
+    {
+      id: "rideCorkScrew",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Name this ride!",
+          media: { kind: "youtube", youtubeId: "QBJZXxxzRlU" },
+          options: ["Big Dipper", "Cork Screw", "Loop the Loop", "Twister"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "rideDodgems",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Name this ride!",
+          media: { kind: "youtube", youtubeId: "LHZJr9JD4Po" },
+          options: ["Ghost Train", "Helter Skelter", "Dodgems", "Waltzers"], answerIndex: 2 }
+      ]
+    },
+    {
+      id: "rideWaltzers",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Name this ride!",
+          media: { kind: "youtube", youtubeId: "Y9FTN-xm6js" },
+          options: ["Dodgems", "Waltzers", "Chair-o Planes", "Carousel"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "rideSpaceship",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Name this ride!",
+          media: { kind: "youtube", youtubeId: "TFAyNLhAKLU" },
+          options: ["Galaxy", "Rocket Ride", "Star Flyer", "Spaceship"], answerIndex: 3 }
+      ]
+    },
+    {
+      id: "rideCamakazi",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "Name this ride!",
+          media: { kind: "youtube", youtubeId: "WNFOPS5V1ug" },
+          options: ["Sizzler", "Twister", "Camakazi", "Enterprise"], answerIndex: 2 }
+      ]
+    },
+    {
+      id: "dadOnLilo",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "How long does it take Dad to get on the lilo?",
+          media: { kind: "youtube", youtubeId: "-xbGP2nehvQ", maskDuration: true },
+          options: ["1 minute 45 seconds", "2 minutes 30 seconds", "3 minutes 28 seconds", "4 minutes 50 seconds"], answerIndex: 2 }
+      ]
+    }
+  ]
 };
