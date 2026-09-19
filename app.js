@@ -54,10 +54,25 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ---------------------------- boot sequence ---------------------------- */
 function boot(){
   showScreen("boot");
+  preloadMovieCovers();
   setTimeout(() => {
     buildWelcome();
     showScreen("welcome");
   }, 2500);
+}
+
+/* Full VHS cover images (200-300KB each) previously only started downloading
+   the moment a spine was clicked, so the shelf-flip animation played over a
+   blank image until it finished loading -- a visible delay before the cover
+   appeared. Warming the browser cache during the ~2.5s boot screen (dead
+   time anyway) means covers are already loaded by the time anyone reaches
+   the shelf. */
+function preloadMovieCovers(){
+  QUIZ_DATA.movies.forEach(movie => {
+    if (!movie.file) return;
+    const img = new Image();
+    img.src = movie.file;
+  });
 }
 
 function showScreen(id){

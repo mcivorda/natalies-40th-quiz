@@ -148,9 +148,10 @@ const QUIZ_DATA = {
     {
       id: "aladdin", title: "Aladdin", file: "images/aladdin-4746l.jpg", spine: "images/spine_aladdin.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "Who voiced the Genie in Disney's ‘Aladdin’ (1992)?",
-          hint: "Famous for largely improvising the role's rapid-fire jokes and impressions.",
-          options: ["Eddie Murphy", "Dan Castellaneta", "Robin Williams", "John Goodman"], answerIndex: 2 },
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune — it's from this film's soundtrack!",
+          media: { kind: "youtube", youtubeId: "A3iK9UIAdKA", start: 0, end: 18, masked: true },
+          hint: "A duet, sung on a magic carpet ride.",
+          options: ["A Whole New World", "Friend Like Me", "Circle of Life", "Colors of the Wind"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the palace guard captain who repeatedly tries to catch Aladdin?",
           hint: "His name starts with 'Ra' — not the Egyptian sun god.",
           options: ["Razoul", "Jafar", "Omar", "Farouk"], answerIndex: 0 }
@@ -159,9 +160,10 @@ const QUIZ_DATA = {
     {
       id: "anastasia", title: "Anastasia", file: "images/anastasia-32087l.jpg", spine: "images/spine_anastasia.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "‘Anastasia’ (1997) is loosely inspired by the fall of which royal family?",
-          hint: "The last imperial family to rule Russia.",
-          options: ["The Habsburgs", "The Romanovs", "The Windsors", "The Bourbons"], answerIndex: 1 },
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune — it's from this film's soundtrack!",
+          media: { kind: "youtube", youtubeId: "p0BmZXc_w3E", start: 0, end: 18, masked: true },
+          hint: "A wistful waltz about a half-remembered palace.",
+          options: ["Once Upon a December", "Journey to the Past", "Paris Holds the Key", "In the Dark of the Night"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of Rasputin's bat sidekick?",
           hint: "He gets his own spin-off short film, 'Bartok the Magnificent.'",
           options: ["Bartok", "Pip", "Vladimir", "Dimitri"], answerIndex: 0 }
@@ -192,9 +194,10 @@ const QUIZ_DATA = {
     {
       id: "cinderella", title: "Cinderella", file: "images/cinderella-all.jpg", spine: "images/spine_cinderella.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "What does Cinderella leave behind on the palace steps at midnight?",
-          hint: "It's the one thing the spell doesn't turn back at the stroke of twelve.",
-          options: ["Her shawl", "A glass slipper", "Her invitation", "A ring"], answerIndex: 1 },
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune — it's from this film's soundtrack!",
+          media: { kind: "youtube", youtubeId: "5dv6pOGeuGs", start: 0, end: 18, masked: true },
+          hint: "The Fairy Godmother's spell needs a little magic word — actually three.",
+          options: ["Bibbidi-Bobbidi-Boo", "A Dream Is a Wish Your Heart Makes", "So This Is Love", "Sing, Sweet Nightingale"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of Cinderella's horse?",
           hint: "A military-sounding rank.",
           options: ["Major", "Captain", "Duke", "Colonel"], answerIndex: 0 }
@@ -214,9 +217,10 @@ const QUIZ_DATA = {
     {
       id: "dirtydancing", title: "Dirty Dancing", file: "images/dirty-dancing-all.jpg", spine: "images/spine_dirtydancing.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "What is the name of the holiday resort in ‘Dirty Dancing’?",
-          hint: "A Catskills-style summer resort, named after the family who runs it.",
-          options: ["Kellerman's", "Grossinger's", "Camp Crystal", "The Pines"], answerIndex: 0 },
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune — it's from this film's soundtrack!",
+          media: { kind: "youtube", youtubeId: "6eyCDj1s4NI", start: 0, end: 18, masked: true },
+          hint: "The song that plays over the famous final lift.",
+          options: ["(I've Had) The Time of My Life", "Hungry Eyes", "She's Like the Wind", "Be My Baby"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What is Baby's real first name, revealed in the film's opening narration?",
           hint: "It's also a country and a common English name.",
           options: ["Frances", "Eleanor", "Patricia", "Margaret"], answerIndex: 0 }
@@ -225,9 +229,10 @@ const QUIZ_DATA = {
     {
       id: "hocuspocus", title: "Hocus Pocus", file: "images/hocus-pocus-32095l.jpg", spine: "images/spine_hocuspocus.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "The three witches in ‘Hocus Pocus’ are resurrected in which town?",
-          hint: "Famous for real 17th-century witch trials.",
-          options: ["Sleepy Hollow", "Salem", "Amityville", "Innsmouth"], answerIndex: 1 },
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune — it's from this film's soundtrack!",
+          media: { kind: "youtube", youtubeId: "DCTbr3vjb6I", start: 0, end: 18, masked: true },
+          hint: "The Sanderson Sisters take over the Halloween dance stage.",
+          options: ["I Put a Spell on You", "Come Little Children", "One Way or Another", "Sarah's Theme"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the immortal black cat who guides the kids through the film?",
           hint: "He was cursed 300 years earlier as a teenage boy.",
           options: ["Thackery Binx", "Salem", "Jinx", "Familiar"], answerIndex: 0 }
@@ -247,9 +252,10 @@ const QUIZ_DATA = {
     {
       id: "ladytramp", title: "Lady and the Tramp", file: "images/lady-and-the-tramp-all.jpg", spine: "images/spine_ladytramp.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "What dish do Lady and Tramp famously share (and nearly kiss over)?",
-          hint: "A classic candlelit Italian restaurant scene.",
-          options: ["Pizza", "Spaghetti", "Meatballs alone", "Ice cream"], answerIndex: 1 },
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune — it's from this film's soundtrack!",
+          media: { kind: "youtube", youtubeId: "fbzEOQLOAWw", start: 0, end: 18, masked: true },
+          hint: "Playing over that spaghetti dinner for two.",
+          options: ["Bella Notte", "He's a Tramp", "The Siamese Cat Song", "La La Lu"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the Scottish terrier who's friends with Lady?",
           hint: "A one-syllable name, also slang for an athletic competitor.",
           options: ["Jock", "Trusty", "Tramp", "Boris"], answerIndex: 0 }
@@ -258,9 +264,10 @@ const QUIZ_DATA = {
     {
       id: "moulinrouge", title: "Moulin Rouge!", file: "images/moulin-rouge-15498l.jpg", spine: "images/spine_moulinrouge.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "‘Moulin Rouge!’ is set in the bohemian district of which city?",
-          hint: "Home to the real Moulin Rouge cabaret, which the film is named after.",
-          options: ["Vienna", "Paris", "Berlin", "Rome"], answerIndex: 1 },
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune — it's from this film's soundtrack!",
+          media: { kind: "youtube", youtubeId: "ELkO5oB5r9M", start: 0, end: 18, masked: true },
+          hint: "The lovers' vow, sung as a duet.",
+          options: ["Come What May", "Your Song", "Lady Marmalade", "El Tango de Roxanne"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the club's ringmaster/owner, played by Jim Broadbent?",
           hint: "First name Harold.",
           options: ["Harold Zidler", "Toulouse-Lautrec", "The Duke", "Chocolat"], answerIndex: 0 }
@@ -280,9 +287,10 @@ const QUIZ_DATA = {
     {
       id: "aristocats", title: "The Aristocats", file: "images/the-aristocats-all.jpg", spine: "images/spine_aristocats.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "What is the name of the elegant mother cat in ‘The Aristocats’?",
-          hint: "A title of nobility, fitting for such a refined cat.",
-          options: ["Marie", "Duchess", "Minou", "Josephine"], answerIndex: 1 },
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune — it's from this film's soundtrack!",
+          media: { kind: "youtube", youtubeId: "wg3j09xiKII", start: 0, end: 18, masked: true },
+          hint: "Scat Cat and his jazz band welcome Duchess and the kittens.",
+          options: ["Ev'rybody Wants to Be a Cat", "The Aristocats", "Scales and Arpeggios", "Thomas O'Malley Cat"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What are the names of the two gossiping geese who help Duchess and the kittens get home?",
           hint: "Auntie and niece — both names start with 'A'.",
           options: ["Abigail and Amelia", "Bianca and Penny", "Flora and Fauna", "Prunella and Winifred"], answerIndex: 0 }
@@ -291,9 +299,10 @@ const QUIZ_DATA = {
     {
       id: "littlemermaid", title: "The Little Mermaid", file: "images/the-little-mermaid-2096l.jpg", spine: "images/spine_littlemermaid.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "What is the name of Ariel's crab friend and reluctant chaperone?",
-          hint: "He sings \"Under the Sea\" with a Jamaican accent.",
-          options: ["Flounder", "Sebastian", "Scuttle", "Louis"], answerIndex: 1 },
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune — it's from this film's soundtrack!",
+          media: { kind: "youtube", youtubeId: "SXKlJuO07eM", start: 0, end: 18, masked: true },
+          hint: "Ariel longs to be where the people are.",
+          options: ["Part of Your World", "Under the Sea", "Kiss the Girl", "Poor Unfortunate Souls"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What are the names of Ursula's two eel henchmen?",
           hint: "One name evokes driftwood, the other a boat's exhaust.",
           options: ["Flotsam and Jetsam", "Squirt and Nemo", "Bubbles and Fin", "Slick and Eely"], answerIndex: 0 }
@@ -313,9 +322,10 @@ const QUIZ_DATA = {
     {
       id: "titanic", title: "Titanic", file: "images/titanic-thx-remastered-10565l.jpg", spine: "images/spine_titanic.jpg",
       questions: [
-        { difficulty: "easy", type: "multiple_choice", prompt: "In what year does the RMS Titanic sink in the film?",
-          hint: "Just two years before World War I began.",
-          options: ["1910", "1912", "1915", "1920"], answerIndex: 1 },
+        { difficulty: "easy", type: "multiple_choice", prompt: "Name that tune — it's from this film's soundtrack!",
+          media: { kind: "youtube", youtubeId: "mNsm2P0l_7Y", start: 0, end: 18, masked: true },
+          hint: "Celine Dion's theme, played as the wreck is explored decades later.",
+          options: ["My Heart Will Go On", "Unchained Melody", "Take My Breath Away", "The Power of Love"], answerIndex: 0 },
         { difficulty: "hard", type: "multiple_choice", prompt: "What is the name of the ship that rescues the Titanic's survivors?",
           hint: "Its name sounds similar to a European mountain range.",
           options: ["The Carpathia", "The Californian", "The Britannic", "The Olympic"], answerIndex: 0 }
