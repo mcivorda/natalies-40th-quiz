@@ -16,8 +16,21 @@ const state = {
   currentIndex: 0,
   currentTapeTitle: null,
   roundHistory: [],   // [{ label, correct, answered, score }] -- one entry per completed tape, this session only
-  answeredMovieIds: new Set()  // movie ids already played from the shelf -- these get stamped "RENTED" and disabled
+  answeredMovieIds: new Set(),  // movie ids already played from the shelf -- these get stamped "RENTED" and disabled
+  surpriseShown: false,        // fires exactly once per player -- guaranteed, not just possible
+  surpriseTargetCount: null,   // picked the first time it's checked: fires on this many-th mid-round transition
+  surpriseTransitionCount: 0
 };
+
+/* Pool of "jack in the box" surprise clips -- no scoring choice, no
+   questions, just a fun gotcha mid-round that docks points. Add more
+   entries here to grow the pool; one is picked at random. Every player
+   sees it exactly once -- the target transition is randomized (1st-4th
+   mid-round "next question" click) so it's unpredictable but guaranteed,
+   rather than a per-question coin flip that could just never land. */
+const SURPRISE_CLIPS = [
+  { src: "video/surprise-doll-moment.mp4" }
+];
 
 const SPINE_COLORS = ["#ff2e9a", "#00fff2", "#faff00", "#7c4dff", "#38ff8a", "#ff7a3d"];
 
@@ -88,7 +101,7 @@ function buildWelcome(){
 }
 
 function categoryIcon(id){
-  return { movies: "\u{1F4FC}", music: "\u{1F3A7}", general: "\u{1F9E0}", y1986: "\u{1F4FE}", homemovies: "\u{1F4FD}" }[id] || "\u2B50";
+  return { movies: "\u{1F4FC}", music: "\u{1F3A7}", general: "\u{1F9E0}", y1986: "\u{1F4FE}", homemovies: "\u{1F4FD}", jobs: "\u{1F4BC}" }[id] || "\u2B50";
 }
 
 function updateScoreboard(){
@@ -121,6 +134,7 @@ function enterCategory(id){
                : id === "general" ? QUIZ_DATA.general
                : id === "y1986" ? QUIZ_DATA.y1986
                : id === "homemovies" ? QUIZ_DATA.homemovies
+               : id === "jobs" ? QUIZ_DATA.jobs
                : [];
     state.currentQueue = bank.map(topic => ({ topic, sourceLabel: labelFor(id) }));
     state.currentIndex = 0;
@@ -401,6 +415,13 @@ function renderQuestion(difficulty){
     media.style.display = "block";
     if (m.kind === "image"){
       media.innerHTML = `<img src="${m.src}" alt="Picture round image">`;
+    } else if (m.kind === "image-spotlight"){
+      media.innerHTML = `
+        <div class="spotlight-wrap">
+          <img src="${m.src}" alt="Natalie's jobs timeline">
+          <div class="spotlight-box" style="top:${m.rowTop}%; height:${m.rowHeight}%;"></div>
+        </div>
+      `;
     } else if (m.kind === "audio"){
       media.innerHTML = `<audio controls src="${m.src}"></audio>`;
     } else if (m.kind === "video"){
@@ -863,7 +884,79 @@ function nextQuestion(){
     finishTape();
   } else {
     showDifficultyChoice();
+    maybeTriggerSurprise();
   }
+}
+
+/* ---------------------------- random event: jack-in-the-box surprise ---------------------------- */
+/* No choice to make -- a short clip that can pop up between questions
+   mid-round, purely as a "gotcha." Plays through on its own, docks 20
+   points the moment it appears (that's the surprise), then closes itself. */
+const SURPRISE_PENALTY = 20;
+
+function maybeTriggerSurprise(){
+  if (state.surpriseShown) return;
+  if (state.surpriseTargetCount == null){
+    state.surpriseTargetCount = 1 + Math.floor(Math.random() * 4); // fires on the 1st-4th mid-round transition
+  }
+  state.surpriseTransitionCount++;
+  if (state.surpriseTransitionCount < state.surpriseTargetCount) return;
+  state.surpriseShown = true;
+  const clip = SURPRISE_CLIPS[Math.floor(Math.random() * SURPRISE_CLIPS.length)];
+  announceSurprise(clip);
+}
+
+/* A big flashed/spoken "DANGEROOOOOOS!" warning right before the popup --
+   the drawn-out spelling reads out stretched on most TTS voices too. */
+function announceSurprise(clip){
+  const banner = document.getElementById("surprise-announce");
+  banner.style.display = "flex";
+  banner.classList.remove("announce-shake");
+  void banner.offsetWidth;
+  banner.classList.add("announce-shake");
+
+  try {
+    const utter = new SpeechSynthesisUtterance("here comes the dangerooooooos");
+    utter.rate = 0.75;
+    utter.pitch = 0.8;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+  } catch (e) {}
+
+  setTimeout(() => {
+    banner.style.display = "none";
+    showSurprise(clip);
+  }, 1400);
+}
+
+function showSurprise(clip){
+  const modal = document.getElementById("surprise-modal");
+  const video = document.getElementById("surprise-video");
+  const result = document.getElementById("surprise-result");
+  modal.classList.remove("surprise-pop");
+  result.textContent = "";
+  video.src = clip.src;
+  video.currentTime = 0;
+  video.onended = () => {
+    state.score = Math.max(0, state.score - SURPRISE_PENALTY);
+    updateScoreboard();
+    result.textContent = `−${SURPRISE_PENALTY} POINTS — gotcha!`;
+    setTimeout(closeSurprise, 1600);
+  };
+  modal.style.display = "flex";
+  void modal.offsetWidth; // restart the pop animation each time
+  modal.classList.add("surprise-pop");
+  video.play().catch(() => { video.onended(); });
+}
+
+function closeSurprise(){
+  const modal = document.getElementById("surprise-modal");
+  const video = document.getElementById("surprise-video");
+  video.pause();
+  video.onended = null;
+  video.removeAttribute("src");
+  video.load();
+  modal.style.display = "none";
 }
 
 function finishTape(){
@@ -970,6 +1063,9 @@ function performQuizReset(){
   state.currentTapeTitle = null;
   state.roundHistory = [];
   state.answeredMovieIds = new Set();
+  state.surpriseShown = false;
+  state.surpriseTargetCount = null;
+  state.surpriseTransitionCount = 0;
   const nameInput = document.getElementById("player-name");
   if (nameInput) nameInput.value = "";
   buildWelcome();

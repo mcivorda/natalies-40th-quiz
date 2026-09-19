@@ -114,7 +114,8 @@ const QUIZ_DATA = {
     { id: "music",      label: "MUSIC",               sub: "name that tune",       color: "#00fff2", glow: "#00fff2" },
     { id: "general",    label: "GENERAL KNOWLEDGE",   sub: "mixed tape",           color: "#faff00", glow: "#faff00" },
     { id: "y1986",      label: "1986",                sub: "the year itself",     color: "#7c4dff", glow: "#a06bff" },
-    { id: "homemovies", label: "HOME MOVIES",         sub: "22 real Natalie moments", color: "#38ff8a", glow: "#38ff8a" }
+    { id: "homemovies", label: "HOME MOVIES",         sub: "22 real Natalie moments", color: "#38ff8a", glow: "#38ff8a" },
+    { id: "jobs",        label: "NATALIE'S JOBS",      sub: "career highlights reel", color: "#ff7a3d", glow: "#ff7a3d" }
   ],
 
   /* ------------------------------------------------------------------------
@@ -905,6 +906,145 @@ const QUIZ_DATA = {
           prompt: "How long does it take Dad to get on the lilo?",
           media: { kind: "youtube", youtubeId: "-xbGP2nehvQ", maskDuration: true },
           options: ["1 minute 45 seconds", "2 minutes 30 seconds", "3 minutes 28 seconds", "4 minutes 50 seconds"], answerIndex: 2 }
+      ]
+    }
+  ],
+
+  /* ------------------------------------------------------------------------
+     JOBS — Natalie's career timeline, early teens through twenties. Each
+     job gets 2 questions; both share the same spotlighted row of
+     images/jobs-timeline.png (rowTop/rowHeight are % of the full image,
+     measured from the actual panel boundaries in that file). Content is
+     real, checkable general knowledge tied to each role/era rather than
+     invented personal anecdotes -- swap in real specifics any time.
+  ------------------------------------------------------------------------ */
+  jobs: [
+    {
+      id: "avonPrice",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 1: AVON — roughly how much would a bottle of Avon's iconic Skin So Soft bath oil have cost back in 1986?",
+          // NOTE: exact 1986 catalog pricing isn't reliably documented online --
+          // this is an inflation-based estimate (~1986 was a David-supplied year, check against a real family catalog if you have one).
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 0.00, rowHeight: 14.99 },
+          options: ["99 cents", "$2.49", "$5.99", "$9.99"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "avonName",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 1: AVON — where does the Avon company name actually come from?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 0.00, rowHeight: 14.99 },
+          options: ["The founder's daughter", "The River Avon, near Shakespeare's home", "A perfume ingredient", "The town it was founded in"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "newspaperAge",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 2: NEWSPAPER DELIVERY — under UK law, what's the minimum age to do a paper round?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 14.99, rowHeight: 15.32 },
+          options: ["10", "13", "15", "16"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "newspaperFreebies",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 2: NEWSPAPER DELIVERY — 90s newspapers famously boosted sales by giving away free copies of what, tucked inside?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 14.99, rowHeight: 15.32 },
+          options: ["CDs and cassettes", "Stickers only", "Pens", "Nothing — that's a myth"], answerIndex: 0 }
+      ]
+    },
+    {
+      id: "chefAlDente",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 3: CHEF, ITALIAN CAFE — what does \"al dente\" mean when cooking pasta?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 30.31, rowHeight: 15.76 },
+          options: ["Very soft", "Firm to the bite", "Overcooked", "Served raw"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "chefPesto",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 3: CHEF, ITALIAN CAFE — alongside basil, garlic, pine nuts and olive oil, traditional pesto alla genovese uses which cheese?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 30.31, rowHeight: 15.76 },
+          options: ["Mozzarella", "Parmesan", "Cheddar", "Brie"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "waitressTipping",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 4: WAITRESS, CAFE — how does UK tipping culture traditionally compare to the US?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 46.07, rowHeight: 12.96 },
+          options: ["Expected at 20%+", "Optional, often just rounding up or ~10%", "Illegal", "Always added automatically"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "waitressCreamTea",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 4: WAITRESS, CAFE — a scone served with jam and clotted cream is traditionally known as a...?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 46.07, rowHeight: 12.96 },
+          options: ["High tea", "Cream tea", "Elevenses", "Cuppa"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "bankScottishNotes",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 5: BANK TELLER, SCOTTISH BANK — what's unique about Scottish banks compared to the Bank of England?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 59.03, rowHeight: 13.62 },
+          options: ["They use a different currency", "They're allowed to issue their own banknotes", "They don't use pounds", "They're unregulated"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "bankDyePack",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 5: BANK TELLER, SCOTTISH BANK — what's a bank \"dye pack\" actually for?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 59.03, rowHeight: 13.62 },
+          options: ["Counting money faster", "Marking stolen cash with ink during a robbery", "Detecting counterfeit notes", "Cleaning banknotes"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "pubLastOrders",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 6: MANAGER, 'THE FLASK' — what does \"last orders\" traditionally signal in a UK pub?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 72.65, rowHeight: 13.01 },
+          options: ["Happy hour starting", "Final chance to order drinks before closing", "A fire drill", "Free food time"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "pubPintSize",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 6: MANAGER, 'THE FLASK' — how many millilitres are in a standard UK pint?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 72.65, rowHeight: 13.01 },
+          options: ["500ml", "568ml", "600ml", "750ml"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "teacherStartAge",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 7: PRIMARY SCHOOL TEACHER — what age do most children start primary school in the UK?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 85.67, rowHeight: 14.33 },
+          options: ["3", "4-5", "6-7", "8"], answerIndex: 1 }
+      ]
+    },
+    {
+      id: "teacherReception",
+      questions: [
+        { difficulty: "easy", type: "multiple_choice",
+          prompt: "JOB 7: PRIMARY SCHOOL TEACHER — what's the first year of primary school in England officially called?",
+          media: { kind: "image-spotlight", src: "images/jobs-timeline.png", rowTop: 85.67, rowHeight: 14.33 },
+          options: ["Kindergarten", "Reception", "Year Zero", "Nursery"], answerIndex: 1 }
       ]
     }
   ]
